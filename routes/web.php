@@ -5,8 +5,8 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
-})->name('index');
+    return view('pages/home');
+})->name('home');
 
 Route::get('/register', function () {
     return view('pages/register');
@@ -16,9 +16,9 @@ Route::get('/login', function () {
     return view('pages/login');
 })->name('login');
 
-Route::get('/home', function () {
-    return view('pages/home');
-})->name('home');
+Route::get('/profile', function () {
+    return view('sections/profile');
+})->name('profile');
 
 Route::get('/index-3', function () {
     return view('pages/index-3');

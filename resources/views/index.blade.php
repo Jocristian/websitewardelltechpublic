@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6 Construction Consulting">
                 <div class="demo">
-                    <a href="{{ route('index-1') }}" target="_blank">
+                    <a href="{{ route('home') }}" target="_blank">
                         <figure>
                             <img alt="demo" class="w-100" src="/img/lead-gen.jpg">
                         </figure>
