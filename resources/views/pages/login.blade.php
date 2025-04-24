@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="review">
-                        <img alt="img" src="/img/google.png">
+                        <img alt="img" src="/img/google.png">`
                         <ul class="star">
                             <li><i class="fa-solid fa-star"></i></li>
                             <li><i class="fa-solid fa-star"></i></li>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/login">
+                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/login" style="margin-top: 45px;"``>
                         @csrf
                         <img src="/img/fom-img.png" alt="img">
                         <h3>Login</h3>

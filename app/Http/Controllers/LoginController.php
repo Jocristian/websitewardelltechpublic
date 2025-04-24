@@ -19,7 +19,7 @@ class LoginController extends Controller {// Menampilkan form login
         // Coba login
         if (auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/index-2'); // Ganti sesuai kebutuhan
+            return redirect()->intended('/'); // Ganti sesuai kebutuhan
         }
 
         // Kalau gagal login

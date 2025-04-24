@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/register">
+                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/register" >
                         @csrf
                         <img src="/img/fom-img.png" alt="img">
                         <h3>Register</h3>

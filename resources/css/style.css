@@ -91,7 +91,8 @@ h6{
     font-size: 18px;
 }
 img {
-    max-width: 100%;
+    margin-top: 1px;
+    max-width: 80%;
 }
 .gap {
     padding: 120px 0;
@@ -130,6 +131,7 @@ input[type=number]::-webkit-inner-spin-button {
 .top-bar ul {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* ini bisa langsung bikin kanan-kiri */
 }
 .top-bar a i svg {
     width: 30px;
@@ -181,6 +183,8 @@ input[type=number]::-webkit-inner-spin-button {
 .navbar-links {
   list-style-type: none;
   display: flex;
+  margin-left: auto;
+
 }
 .navbar-links li:not(:last-child) {
     padding-right: 40px;
@@ -311,6 +315,7 @@ a.search-btn svg {
 }
 .navbar-links li > a i {
     padding-right: 6px;
+    padding-left: 12px;
 }
 
 @media only screen and (max-width: 1920px) and (min-width: 1200px){
@@ -337,7 +342,8 @@ header {
     width: 100%;
 }
 .top-bar ul li {
-    padding-right: 40px;
+    margin-top: 2px;
+    padding-left: 30px;
 }
 .top-bar ul li a{
     color: white;
@@ -434,13 +440,13 @@ header {
 header .btn:after {
     width: 136%;
 }
- li.navbar-dropdown.menu-item-children {
+li.navbar-dropdown.menu-item-children {
     padding-right: 100px;
 }
 /* 4. hero-section */
 .hero-section {
     position: relative;
-    padding-top: 187px;
+    padding-top: 150px;
     overflow: hidden;
     background-color: var(--bgcolor);
     background-repeat: no-repeat;
@@ -2070,10 +2076,6 @@ footer ul.shaps-img li:nth-child(3) {
 }
 .hero-section.three {
     background-size: cover;
-}
-
-.logo img{
-    width: 180px;
 }
 
 

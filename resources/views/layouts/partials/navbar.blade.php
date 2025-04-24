@@ -1,9 +1,9 @@
 <header id="stickyHeader">
     <div class="container">
-        <div class="top-bar">
+        <div class="top-bar" style="height: 120px;">
             <div class="logo">
                 <a href="{{ route('home') }}">
-                    <img alt="logo" src="/img/logokunW.png">
+                    <img alt="logo-heading" src="/img/logokunW.png">
                 </a>`
             </div>
             <nav class="navbar">
@@ -23,7 +23,7 @@
                         <a href="#pricing">Pricing</a>
                     </li>
                     <li class="navbar-dropdwon">
-                        <a href="profile"><i class="fas fa-user-circle" style="color:white; font-size:24px;"></i>
+                        <a href="profile"><i class="fas fa-user-circle" style="margin-top: 4px;"></i>
                         </a>
                     </li>
                 </ul>
