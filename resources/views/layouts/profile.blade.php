@@ -13,5 +13,6 @@
 <body>
 @yield('css')
 @yield('profile')
+@yield('myservices')
 <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>

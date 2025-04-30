@@ -14,7 +14,7 @@
                         <a href="#about"> About </a>
                     </li>
                     <li class="navbar-dropdown">
-                        <a href="#services">Services</a>
+                        <a href="services">Services</a>
                     </li>
                     <li class="navbar-dropdown">
                         <a href="#team">Freelancer</a>
@@ -23,7 +23,7 @@
                         <a href="#pricing">Pricing</a>
                     </li>
                     <li class="navbar-dropdwon">
-                        <a href="profile"><i class="fas fa-user-circle" style="margin-top: 4px;"></i>
+                        <a href="{{ auth()->check() ? url('/profile') : url('/login') }}"><i class="fas fa-user-circle" style="margin-top: 4px;"></i>
                         </a>
                     </li>
                 </ul>

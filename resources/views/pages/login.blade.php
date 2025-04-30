@@ -39,7 +39,9 @@
                         @enderror
                         <button type="submit" class="button btn"><span><span>Submit Now</span></span></button>
                         <!--   -->
+                        <div class="text-center"><a class="text-center" href="register">aaaaaaaaa</a></div>
                     </form>
+                    
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@
 
                <div class="sidebar__list">
 
-               <a href="" class="sidebar__link active-link">
+               <a href="" class="sidebar__link">
                      <i class="ri-pie-chart-2-fill"></i>
                      <span>Dashboard</span>
                   </a>
@@ -58,12 +58,12 @@
                   </a>
 
                   @if (auth() -> user() -> role == 'freelancer' )
-                  <a href="" class="sidebar__link">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>portofolio</span>
-                  </a>
-                  
-                  <a href="" class="sidebar__link">
+                  <a href="myservices" class="sidebar__link">
+                        <i class="ri-mail-unread-fill"></i>
+                        <span>My Services</span>
+                     </a>
+
+                     <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
                         <i class="ri-mail-unread-fill"></i>
                         <span>My Messages</span>
                      </a>
