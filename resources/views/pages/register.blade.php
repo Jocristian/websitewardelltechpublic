@@ -7,21 +7,10 @@
                 <div class="col-lg-7">
                     <div class="hero-text sec-title-animation animation-style2">
                         <span class="title-animation">The best ways to </span>
-                        <h2 class="title-animation">Promote a New Product or Service</h2>
+                        <h2 class="title-animation">Promote a New Service</h2>
                         <div class="d-flex listing">
                             <p>Scale up your business with the freelancer by building your own digital platform to promote.</p>
                         </div>
-                    </div>
-                    <div class="review">
-                        <img alt="img" src="/img/google.png">
-                        <ul class="star">
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                        </ul>
-                        <h6>(5.0) </h6>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -62,7 +51,9 @@
                         </div>
                         <button type="submit" class="button btn"><span><span>Submit Now</span></span></button>
                         <!--   -->
+                        <div class="text-center pt-3"><a class="text-center" href="login">Have an Account?</a></div>
                     </form>
+                    
                 </div>
             </div>
         </div>

@@ -5,6 +5,14 @@
 <section>
    <!--=============== HEADER ===============-->
    <header class="header" id="header">
+      <script>
+         function toggleAddServiceForm() {
+            const form = document.getElementById('addServiceForm');
+            form.classList.toggle('d-none');
+         }
+      </script>
+
+
       <!-- Bootstrap CSS -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
       <!-- Bootstrap JS (for modal functionality) -->
@@ -27,7 +35,10 @@
       <div class="sidebar__container">
          <div class="sidebar__user">
             <div class="sidebar__img">
-               <img src="{{ asset('img.team-1.jpg') }}" alt="image">
+                <img 
+                  src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" 
+                  style="height: 100%; width: auto;" 
+                  alt="profile image">
             </div>
 
             <div class="sidebar__info">
@@ -48,18 +59,12 @@
                   </a>
 
 
-               <a href="" class="sidebar__link">
+                  <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
                      <i class="ri-pie-chart-2-fill"></i>
                      <span>Edit Profile</span>
                   </a>
 
-                  <a href="" class="sidebar__link">
-                     <i class="ri-wallet-3-fill"></i>
-                     <span>My Wallet</span>
-                  </a>
-
-
-                  <a href="" class="sidebar__link">
+                  <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
                      <i class="ri-arrow-up-down-line"></i>
                      <span>Recent Transactions</span>
                   </a>
@@ -69,27 +74,15 @@
                      <i class="ri-arrow-up-down-line"></i>
                      <span>my services</span>
                   </a>
-                  
-                  <a href="" class="sidebar__link">
+                  <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
                         <i class="ri-mail-unread-fill"></i>
                         <span>My Messages</span>
-                     </a>
-
-                     <a href="" class="sidebar__link">
-                        <i class="ri-notification-2-fill"></i>
-                        <span>Notifications</span>
-                     </a>
+                  </a>
                   @endif
 
                </div>
             </div>
             <div class="sidebar__actions">
-            <h3 class="sidebar__title">SETTINGS</h3>
-               <button>
-                  <i class="ri-moon-clear-fill sidebar__link sidebar__theme" id="theme-button">
-                     <span>Theme</span>
-                  </i>
-               </button>
          <div class="sidebar__actions">
             <form action="{{ route('logout') }}" method="POST">
                @csrf
@@ -103,93 +96,133 @@
    </nav>
 
    <!--=============== MAIN ===============-->
-   <main class="main container ms-5 " id="main">
-   <div class="row">   
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>My Services</h1>
+<main class="main container mt-4" id="main"> 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+      <div class="d-grid gap-2">
+         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="toggleAddServiceForm()">
             Add Service
-        </button>
-    </div>
+         </button>
+      </div>
+
+
 
     <!-- Modal -->
-    <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-         <form action="{{ route('postservice') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+         <div id="addServiceForm" class="mt-4 d-none">
+            <form action="{{ route('postservice') }}" method="POST" enctype="multipart/form-data" class="border rounded p-4 shadow">
+               @csrf
+               <h5 class="mb-4">Add New Service</h5>
+
+               <div class="mb-3">
+                     <label for="price" class="form-label">Price</label>
+                     <input type="number" class="form-control" name="price" id="price" oninput="this.value = this.value.slice(0, 7)" required>
+               </div>
+
+               <div class="mb-3">
+                     <label for="overview" class="form-label">Overview</label>
+                     <input type="text" class="form-control" name="overview" id="overview" required>
+               </div>
+
+               <div class="mb-3">
+                     <label for="description" class="form-label">Description</label>
+                     <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+               </div>
+
+               <div class="mb-3">
+                     <label for="photo" class="form-label">Photo</label>
+                     <input type="file" class="form-control" name="photo" id="photo" accept="image/*" required>
+               </div>
+
+               <div class="mb-3">
+                     <label for="category" class="form-label mb-3">Category</label>
+                     <select class="form-select" name="category" id="category" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="web">Web</option>
+                     </select>
+               </div>
+
+               <div class="d-flex justify-content-end">
+                     <button type="submit" class="btn btn-success me-2">Submit</button>
+                     <button type="button" class="btn btn-secondary" onclick="hideAddServiceForm()">Cancel</button>
+               </div>
+            </form>
+         </div>
+
+
+         @foreach ($services as $service)
+            <div class="bg-white shadow-md rounded-lg p-4 mt-4 flex flex-row">
+               <div class="w-1/6">
+                     <a href="{{ url('services/' . $service->service_id) }}">
+                        <img src="{{ asset('storage/' . $service->photo) }}" alt="Service Image" class="h-40 w-40 object-cover rounded-lg">
+                     </a>
+               </div>
+               <div class="w-5/6 pl-4">
+                     <h1 class="text-xl font-bold mt-2">{{ $service->overview }}</h1>
+                     <div class="flex justify-between items-center mt-2">
+                        <span class="text-yellow-500">⭐ 4.8 (320 ratings)</span>
+                        <span class="text-gray-700">Rp{{ number_format($service->price, 2) }}</span>
+                     </div>
+                     <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-secondary mt-2" data-bs-toggle="modal" data-bs-target="#editServiceModal{{ $service->service_id }}">
+                           Edit Service
+                        </button>
+                        <form action="{{ route('services.destroy', $service->service_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                           @csrf
+                           @method('DELETE')
+                           <button type="submit" class="btn btn-danger mt-2">Delete</button>
+                        </form>
+                     </div>
+               </div>
+            </div>
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editServiceModal{{ $service->service_id }}" tabindex="-1" aria-labelledby="editServiceModalLabel{{ $service->service_id }}" aria-hidden="true">
+            <div class="modal-dialog">
+               <form action="{{ route('updateservice', $service->service_id) }}" method="POST" enctype="multipart/form-data" class="modal-content">
                   @csrf
+                  @method('PUT')
                   <div class="modal-header">
-                     <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <h5 class="modal-title" id="editServiceModalLabel{{ $service->service_id }}">Edit Service</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                  <div class="mb-3">
+                     <label for="price{{ $service->service_id }}" class="form-label">Price</label>
+                     <input type="number" class="form-control" name="price" id="price{{ $service->service_id }}" value="{{ $service->price }}" oninput="this.value = this.value.slice(0, 7)" required>
                   </div>
 
-                  <div class="modal-body">
-                     <div class="mb-3">
-                           <label for="price" class="form-label">Price</label>
-                           <input type="number" class="form-control" name="price" id="price" required>
-                     </div>
+                  <div class="mb-3">
+                     <label for="overview{{ $service->service_id }}" class="form-label">Overview</label>
+                     <input type="text" class="form-control" name="overview" id="overview{{ $service->service_id }}" value="{{ $service->overview }}" required>
+                  </div>
 
-                     <div class="mb-3">
-                           <label for="overview" class="form-label">Overview</label>
-                           <input type="text" class="form-control" name="overview" id="overview" required>
-                     </div>
+                  <div class="mb-3">
+                     <label for="description{{ $service->service_id }}" class="form-label">Description</label>
+                     <textarea class="form-control" name="description" id="description{{ $service->service_id }}" rows="3" required>{{ $service->description }}</textarea>
+                  </div>
 
-                     <div class="mb-3">
-                           <label for="description" class="form-label">Description</label>
-                           <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
-                     </div>
+                  <div class="mb-3">
+                     <label for="photo{{ $service->service_id }}" class="form-label">Photo</label>
+                     <input type="file" class="form-control" name="photo" id="photo{{ $service->service_id }}" accept="image/*">
+                  </div>
 
-                     <div class="mb-3">
-                           <label for="photo" class="form-label">Photo</label>
-                           <input type="file" class="form-control" name="photo" id="photo" accept="image/*" required>
-                     </div>
-                     </div>
 
-                     <div class="mb-3">
-                        <label for="category" class="form-label mb-3">Category</label>
-                        <select class="form-select" name="category" id="category" required>
-                           <option value="" disabled selected>Select category</option>
-                           <option value="mobile">Mobile</option>
-                           <option value="web">Web</option>
-                        </select>
-                     </div>
-
+                  <div class="mb-3">
+                     <label for="category{{ $service->service_id }}" class="form-label">Category</label>
+                     <select class="form-select" name="category" id="category{{ $service->service_id }}" required>
+                        <option value="mobile" {{ $service->category === 'mobile' ? 'selected' : '' }}>Mobile</option>
+                        <option value="web" {{ $service->category === 'web' ? 'selected' : '' }}>Web</option>
+                     </select>
+                  </div>
+                  </div>
                   <div class="modal-footer">
-                     <button type="submit" class="btn btn-success">Submit</button>
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-success">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   </div>
                </form>
-         </div>
-      </div>
-      </div>
-      <p>Total services: {{ $services->count() }}</p>
-      <div class="container-fluid">
-<?php
-      foreach($services as $service):
-      // @foreach($services as $service)
-
-      // <div class="card">
-      //       <h3>'.$service->overview.'</h3>
-      //       <p><strong>Category:</strong>'.$service->category.'</p>
-      //       <p><strong>Description:</strong>'.$service->description.'</p>
-      //       <p><strong>Price:</strong>'.number_format($service->price, 2).'</p>
-      //       <img src="'.asset('storage/' . $service->photo).'" alt="Service Photo" style="width: 200px; height: auto;">
-      // </div>
-      echo '
-         
-            <div class="bg-white shadow-md rounded-lg p-4 mt-4 ms-5">
-               <img src="'.asset('storage/' . $service->photo).'" alt="Business Website" class="w-full h-40 object-cover rounded-lg">
-               <h2 class="text-xl font-bold mt-2">'.$service->overview.'aaaaaaaaaaaaaaaa' .$service->photo.'</h2>
-               <div class="flex justify-between items-center mt-2">
-               <span class="text-yellow-500">⭐ 4.8 (320 ratings)</span>
-               <span class="text-gray-700">Rp'.number_format($service->price, 2).'</span>
-               </div>
-               <p class="text-gray-500 text-sm">Original Price: Rp1.500.000</p>
             </div>
-         ';
-      endforeach;
-?>
-</div>
-   </main>
+            </div>
+         @endforeach
+
+</main>
 </section>
 @endsection

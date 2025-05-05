@@ -7,20 +7,10 @@
                 <div class="col-lg-7">
                     <div class="hero-text sec-title-animation animation-style2">
                         <span class="title-animation">The best ways to </span>
-                        <h2 class="title-animation">Promote a New Product or Service</h2>
+                        <h2 class="title-animation">Promote a New Service</h2>
                         <div class="d-flex listing">
                             <p>Scale up your business with the freelancer by building your own digital platform to promote.</p>
                         </div>
-                    </div>
-                    <div class="review">
-                        <img alt="img" src="/img/google.png">`
-                        <ul class="star">
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -39,7 +29,14 @@
                         @enderror
                         <button type="submit" class="button btn"><span><span>Submit Now</span></span></button>
                         <!--   -->
-                        <div class="text-center"><a class="text-center" href="register">aaaaaaaaa</a></div>
+                        <div class="text-center pt-3"><a class="text-center" href="register">Dont Have an Account?</a></div>
+                        <div class="text-center primary pt-3">
+                            <strong>
+                                <a class="text-center" href="/">
+                                    <i class="fas fa-arrow-left"></i> Go Back
+                                </a>
+                            </strong>
+                        </div>
                     </form>
                     
                 </div>
@@ -53,5 +50,6 @@
             <li><img src="/img/shaps-3.png" alt="img"></li>
         </ul>
     </section>
-
+    @include('layouts.partials.footer')
 @endsection
+

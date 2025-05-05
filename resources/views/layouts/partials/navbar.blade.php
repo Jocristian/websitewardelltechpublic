@@ -11,16 +11,13 @@
                     <li class="navbar-dropdown menu-item-children">
                     </li>
                     <li class="navbar-dropdown">
-                        <a href="#about"> About </a>
+                        <a href="/"> About </a>
                     </li>
                     <li class="navbar-dropdown">
-                        <a href="services">Services</a>
+                        <a href="{{ url('/services') }}">Services</a>
                     </li>
                     <li class="navbar-dropdown">
-                        <a href="#team">Freelancer</a>
-                    </li>
-                    <li class="navbar-dropdown">
-                        <a href="#pricing">Pricing</a>
+                        <a href="{{ url('/freelancers') }}">Freelancer</a>
                     </li>
                     <li class="navbar-dropdwon">
                         <a href="{{ auth()->check() ? url('/profile') : url('/login') }}"><i class="fas fa-user-circle" style="margin-top: 4px;"></i>

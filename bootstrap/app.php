@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        return [
+            'checkRole' => App\Http\Middleware\CheckRole::class,
+        ];
+        
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

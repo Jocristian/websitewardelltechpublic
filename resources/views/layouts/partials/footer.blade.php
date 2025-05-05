@@ -1,25 +1,7 @@
 <footer class="gap no-bottom" style="background-image: url(/img/footer.jpg);">
     <div class="container">
-        <div class="footer-try">
-            <div>
-                <h2>Start Your Business and Achieve Goals</h2>
-                <p>Great and strong landing page made to enhance the marketer's workflow.</p>
-            </div>
-            <a href="#" class="button btn"><span><span>Try 14 Days for Free</span></span></a>
-        </div>
+        
         <div class="row">
-            <div class="col-lg-4">
-                <div class="footer-logo">
-                    <img src="/img/logo.png" alt="img">
-                    <p>component library to build your own components of UI. Reuse existing Hero, sections component lie
-                        your own components. </p>
-                    <ul class="social-media">
-                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="flaticon-twitter"></i></a></li>
-                        <li><a href="#"><i class="flaticon-instagram"></i></a></li>
-                    </ul>
-                </div>
-            </div>
             <div class="col-lg-4 col-md-12">
                 <div class="widget-title">
                     <h3>Useful Links</h3>
@@ -60,20 +42,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="all-rights">
-            <p>© 2024 websole by Websole. All Rights Reserved.</p>
-            <div class="review">
-                <img alt="img" src="/img/google-w.png">
-                <ul class="star">
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                </ul>
-                <h6>(5.0) </h6>
             </div>
         </div>
     </div>

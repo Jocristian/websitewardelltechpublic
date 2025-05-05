@@ -12,18 +12,7 @@
                             <p>We're here to help your business grow by connecting you with talented freelancers</p>
                         </div>
                     </div>
-                    <a href="#" class="button btn"><span><span>click here</span></span></a>
-                    <div class="review">
-                        <img alt="img" src="/img/google.png">
-                        <ul class="star">
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                            <li><i class="fa-solid fa-star"></i></li>
-                        </ul>
-                        <h6>(5.0) </h6>
-                    </div>
+                    <a href="register" class="button btn"><span><span>click here To Get Started</span></span></a>
                 </div>
             </div>
         </div>
