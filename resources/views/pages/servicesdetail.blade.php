@@ -124,9 +124,10 @@
         @endphp
 
         @if (!$isOwner && !$isFreelancer)
-            <a href="{{ url('services/' . $services->service_id . '/orderdetail') }}">
-                <button class="btn btn-primary w-100 my-2">Continue</button>
-            </a>
+            <form method="POST" action="{{ route('order.quickCreate', $services->service_id) }}">
+                @csrf
+                <button type="submit" class="btn btn-primary w-100 my-2">Continue</button>
+            </form>
             <button class="btn btn-outline-dark w-100" id="chat-toggle-btn">Contact me</button>
         @else
             <p class="text-danger text-center">You cannot order your own service or you are a freelancer.</p>

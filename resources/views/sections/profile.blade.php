@@ -5,8 +5,17 @@
    <!--=============== HEADER ===============-->
    <header class="header" id="header">
          <div class="header__container">
-            <a href="{{ route('home') }}" class="header__logo">
-               <span>WardellTech</span>
+            <a href="{{ route('my-profile', auth()->user()->id) }}" class="header__logo">
+                <div class="sidebar__info mx-2">
+                <h3><p class="text-end" class="font-semibold"> {{auth()-> user()->name }}</p></h3>
+                <span> {{ auth()-> user()->email}} </span>
+                </div>
+               <div class="sidebar__img">
+                <img 
+                  src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" 
+                  style="height: 100%; width: auto;" 
+                  alt="profile image">
+            </div>
             </a>
             
             <button class="header__toggle" id="header-toggle">
@@ -49,23 +58,19 @@
          }
       </style>
    </header>
+   </header>
 
    <!--=============== SIDEBAR ===============-->
    <nav class="sidebar" id="sidebar">
       <div class="sidebar__container">
+         <a href="{{ route('home') }}">
          <div class="sidebar__user">
-            <div class="sidebar__img">
-            <img 
-               src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" 
-               style="height: 100%; width: auto;" 
-               alt="profile image">
-            </div>
-
-            <div class="sidebar__info">
-               <h3> {{auth()-> user()->name }}</h3>
-               <span> {{ auth()-> user()->email}} </span>
-            </div>
+                <img alt="logo-heading" src="/img/logoheading.png" style="height: 50px">
+                <div class="sidebar__info h5 my-2">
+                    <h5 class="text-center my-2"><p style="font-size: 50px, font-family: Rubik">Wardell Tech</p></h5>
+                </div>
          </div>
+        </a>
 
          <div class="sidebar__content">
             <div>
@@ -73,7 +78,7 @@
 
                <div class="sidebar__list">
 
-                  <a href="" class="sidebar__link">
+                  <a href="{{ route('dashboard') }}" class="sidebar__link {{ request()->is('dashboard') ? 'active-link' : '' }}">
                      <i class="ri-pie-chart-2-fill"></i>
                      <span>Dashboard</span>
                   </a>
@@ -91,7 +96,7 @@
 
                   @if (auth() -> user() -> role == 'freelancer' )
                   <a href="myservices" class="sidebar__link">
-                        <i class="ri-mail-unread-fill"></i>
+                        <i class="ri-arrow-up-down-line"></i>
                         <span>My Services</span>
                      </a>
 
@@ -116,7 +121,7 @@
       </div>
    </nav>
    <!--=============== MAIN ===============-->
-   <main class="main container" id="main">
+   <main class="main" id="main">
          <div class="profile-card">
          <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf

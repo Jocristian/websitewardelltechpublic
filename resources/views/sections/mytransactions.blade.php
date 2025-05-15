@@ -13,8 +13,17 @@
       <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
          <div class="header__container">
-            <a href="{{ route('home') }}" class="header__logo">
-               <span>WardellTech</span>
+            <a href="{{ route('my-profile', auth()->user()->id) }}" class="header__logo">
+                <div class="sidebar__info mx-2">
+                <h3><p class="text-end" class="font-semibold"> {{auth()-> user()->name }}</p></h3>
+                <span> {{ auth()-> user()->email}} </span>
+                </div>
+               <div class="sidebar__img">
+                <img 
+                  src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" 
+                  style="height: 100%; width: auto;" 
+                  alt="profile image">
+            </div>
             </a>
             
             <button class="header__toggle" id="header-toggle">
@@ -66,19 +75,14 @@
    <!--=============== SIDEBAR ===============-->
    <nav class="sidebar" id="sidebar">
       <div class="sidebar__container">
+         <a href="{{ route('home') }}">
          <div class="sidebar__user">
-            <div class="sidebar__img">
-               <img 
-                  src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" 
-                  style="height: 100%; width: auto;" 
-                  alt="profile image">
-            </div>
-
-            <div class="sidebar__info">
-               <h3> {{auth()-> user()->name }}</h3>
-               <span> {{ auth()-> user()->email}} </span>
-            </div>
+                <img alt="logo-heading" src="/img/logoheading.png" style="height: 50px">
+                <div class="sidebar__info h5 my-2">
+                    <h5 class="text-center my-2"><p style="font-size: 50px, font-family: Rubik">Wardell Tech</p></h5>
+                </div>
          </div>
+        </a>
 
          <div class="sidebar__content">
             <div>
@@ -86,7 +90,7 @@
 
                <div class="sidebar__list">
 
-               <a href="" class="sidebar__link">
+               <a href="{{ route('dashboard') }}" class="sidebar__link">
                      <i class="ri-pie-chart-2-fill"></i>
                      <span>Dashboard</span>
                   </a>
@@ -105,7 +109,7 @@
                   @if (auth() -> user() -> role == 'freelancer' )
                   <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
                      <i class="ri-arrow-up-down-line"></i>
-                     <span>my services</span>
+                     <span>My Services</span>
                   </a>
                   
                   <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
@@ -130,7 +134,7 @@
    </nav>
 
    <!--=============== MAIN ===============-->
-   <main class="main container" id="main"> 
+   <main class="main mx-5" id="main"> 
         <!-- Button trigger modal -->
 
 
@@ -138,13 +142,15 @@
     <!-- Modal -->
     @if (auth() -> user() -> role == 'freelancer' )
          @foreach ($order as $order)
+            @if ($order->status !== 'pending')
             <div class="card mb-3 p-3 d-flex flex-row align-items-center justify-content-between">
                <div class="d-flex align-items-center">
-                  <img src="{{ asset('storage/' . $order->service->photo) }}" width="100" class="me-3 rounded">
+                  <img src="{{ asset('storage/' . $order->service->photo) }}" class="me-3 rounded" style="height: 100px; max-width: 100px; object-fit: cover;">
                   <div>
                      <div><strong>{{ $order->service->overview }}</strong></div>
                      <div><strong>Price:</strong> ${{ $order->service->price }}</div>
                      <div><strong>Due In:</strong> {{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}</div>
+                     <div><strong>Status:</strong> {{ $order->status }}</div>
                   </div>
                </div>
             
@@ -152,6 +158,7 @@
                   @csrf
                   @method('PUT')
                   <select name="status" class="form-select">
+                     
                      <option value="on progress" {{ $order->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
                      <option value="finished" {{ $order->status == 'finished' ? 'selected' : '' }}>Finished</option>
                   </select>
@@ -194,9 +201,11 @@
                   </div>
                </div>
             </div>
+            @endif
          @endforeach
       @else (auth() -> user() -> role == 'customer' )
          @foreach ($order as $order)
+            @if ($order->status !== 'pending')
             <div class="card mb-4">
                   <div class="card-body d-flex justify-content-between align-items-center">
                      <div class="d-flex align-items-center">
@@ -245,6 +254,7 @@
                      </div>
                   </div>
             </div>
+            @endif
          @endforeach
       @endif
       <div class="modal fade" id="orderUpdateModal" tabindex="-1" aria-labelledby="orderCompleteLabel" aria-hidden="true">

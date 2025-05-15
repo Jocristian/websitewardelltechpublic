@@ -37,97 +37,140 @@
 @section('content')
 <div class="container my-5">
     <!-- Alert success -->
-    <div class="alert alert-success">
-        ✅ Thank you for your purchase! A receipt has been sent to your email.
+    <!-- Alert sukses -->
+<div class="alert alert-success">
+    ✅ Terima kasih atas pembelian Anda! Bukti pembayaran telah dikirim ke email Anda.
+</div>
+
+<!-- Persyaratan Pesanan -->
+<div class="card mb-4">
+    <div class="card-header">
+        <strong>Kirim Persyaratan untuk Memulai Pesanan Anda</strong>
     </div>
+    <div class="card-body">
+        <p>Penjual memerlukan informasi berikut untuk mulai mengerjakan pesanan Anda:</p>
+        <ul>
+            <li>Kirim teks atau detail yang perlu diketahui freelancer.</li>
+            <li>Lampirkan file atau instruksi jika diperlukan.</li>
+        </ul>
 
-    <!-- Order Requirements -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <strong>Submit Requirements to Start Your Order</strong>
-        </div>
-        <div class="card-body">
-            <p>The seller needs the following information to start working on your order:</p>
-            <ul>
-                <li>Send any text or details the freelancer should know.</li>
-                <li>Attach files or instructions if necessary.</li>
-            </ul>
+        <form action="{{ route('order.submit', $order->service_id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group mb-3">
+                <textarea name="requirements" class="form-control" rows="5" maxlength="2500" required></textarea>
+                <small class="text-muted">Maksimum 2500 karakter</small>
+            </div>
 
-            <form action="{{ route('order.submit', $service->service_id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group mb-3">
-                    <textarea name="requirements" class="form-control" rows="5" maxlength="2500" required></textarea>
-                    <small class="text-muted">Max 2500 characters</small>
-                </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="confirm" required>
+                <label class="form-check-label" for="confirm">
+                    Informasi yang saya berikan <strong>akurat dan lengkap</strong>.
+                </label>
+            </div>
 
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="confirm" required>
-                    <label class="form-check-label" for="confirm">
-                        The information I provided is <strong>accurate and complete</strong>.
-                    </label>
-                </div>
-
-                <div class="d-flex justify-content-between">
-                    <a href="#" class="btn btn-outline-secondary">Remind Me Later</a>
-                    <button type="submit" class="btn btn-success">Start Order</button>
-                </div>
-                <input type="hidden" name="service_id" value="{{ $service->service_id }}">
-                <input type="hidden" name="seller_id" value="{{ $service->user_id }}">
-            </form>
-        </div>
+            <div class="d-flex justify-content-between">
+                <a href="#" class="btn btn-outline-secondary">Ingatkan Saya Nanti</a>
+                <button type="button" id="pay-button" class="btn btn-success">Mulai Pesanan & Bayar</button>
+            </div>
+            <input type="hidden" name="service_id" value="{{ $order->service_id }}">
+            <input type="hidden" name="seller_id" value="{{ $order->user_id }}">
+        </form>
     </div>
+</div>
 
-    <!-- Sidebar Info -->
-    <div class="card">
-        <div class="card-body">
-            <h5>{{ $service->overview }}</h5>
-            <p>Service by: {{ $service->user_id }} <strong>{{ $service->user->name }}</strong>
+<!-- Info Sidebar -->
+<div class="card">
+    <div class="card-body">
+        <h5>{{ $order->overview }}</h5>
+        <p>Layanan oleh: {{ $order->user_id }} <strong>{{ $order->service->user->name }}</strong></p>
     </div>
-    <!-- Order Complete Modal -->
-    <div class="modal fade" id="orderCompleteModal" tabindex="-1" aria-labelledby="orderCompleteLabel" aria-hidden="true">
+</div>
+
+<!-- Modal Pesanan Selesai -->
+<div class="modal fade" id="orderCompleteModal" tabindex="-1" aria-labelledby="orderCompleteLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4">
-        <h4 class="modal-title text-success mb-3" id="orderCompleteLabel">🎉 Order Complete</h4>
-        <p>Thank you! Your order has been submitted successfully.</p>
-        <a href="/" class="btn btn-primary mt-3">Back to Dashboard</a>
+            <h4 class="modal-title text-success mb-3" id="orderCompleteLabel">🎉 Pesanan Selesai</h4>
+            <p>Terima kasih! Pesanan Anda berhasil dikirim.</p>
+            <a href="/" class="btn btn-primary mt-3">Kembali ke Dashboard</a>
         </div>
     </div>
-    </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const modalElement = document.getElementById('orderCompleteModal');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const modalElement = document.getElementById('orderCompleteModal');
 
-            if (!form || !modalElement) return;
+        if (!form || !modalElement) return;
 
-            const modal = new bootstrap.Modal(modalElement);
+        const modal = new bootstrap.Modal(modalElement);
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevent default submit
-                modal.show(); // Show modal
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Mencegah submit default
+            modal.show(); // Tampilkan modal
 
-                // After showing modal, submit form for real
-                setTimeout(() => {
-                    form.submit();
-                }, 1500);
-            });
+            // Setelah modal muncul, submit form secara otomatis
+            setTimeout(() => {
+                form.submit();
+            }, 1500);
         });
-    </script>
-    @if(session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = new bootstrap.Modal(document.getElementById('orderCompleteModal'));
-            modal.show();
+    });
+</script>
 
-            // Wait for the modal to be hidden before redirecting
-            const modalElement = document.getElementById('orderCompleteModal');
-            modalElement.addEventListener('hidden.bs.modal', function () {
-                window.location.href = "/dashboard"; // or any other redirect URL after modal closes
-            });
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = new bootstrap.Modal(document.getElementById('orderCompleteModal'));
+        modal.show();
+
+        // Tunggu modal ditutup sebelum mengarahkan
+        const modalElement = document.getElementById('orderCompleteModal');
+        modalElement.addEventListener('hidden.bs.modal', function () {
+            window.location.href = "/dashboard"; // atau URL lainnya
         });
-    </script>
-    @endif
+    });
+</script>
+@endif
+
+<!-- Script Midtrans -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+<script>
+    document.getElementById('pay-button').addEventListener('click', function (e) {
+        e.preventDefault(); // cegah tombol submit default
+
+        const form = document.querySelector('form');
+
+        // Validasi dasar
+        if (!form.reportValidity()) {
+            return; // Jangan lanjutkan jika form tidak valid
+        }
+
+        fetch('{{ route("order.pay", ["service_id" => $order->service_id, "order_id" => $order->id]) }}')
+            .then(response => response.json())
+            .then(data => {
+                window.snap.pay(data.snapToken, {
+                    onSuccess: function (result) {
+                        // Submit form jika pembayaran berhasil
+                        form.submit();
+                    },
+                    onPending: function (result) {
+                        alert("Pembayaran sedang diproses. Mohon tunggu konfirmasi.");
+                    },
+                    onError: function (result) {
+                        alert("Pembayaran gagal. Silakan coba lagi.");
+                    },
+                    onClose: function () {
+                        alert("Anda menutup jendela pembayaran sebelum menyelesaikan transaksi.");
+                    }
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Gagal memproses pembayaran. Silakan coba lagi.");
+            });
+    });
+</script>
 
 
 

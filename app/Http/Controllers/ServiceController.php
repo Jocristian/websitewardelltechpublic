@@ -10,9 +10,21 @@ use App\Models\Order;
 class ServiceController extends Controller
 {
 
-    public function myServices() {
-        $services = Service::where('user_id', auth()->id())->get(); // Fetch services of the authenticated user
-        return view('sections.myservices', compact('services')); // Pass 'services' to the view
+    public function myServices()
+    {
+        // Eager load orders with review for performance
+        $services = Service::with('ordersWithReview')
+            ->where('user_id', auth()->id())
+            ->get();
+
+        // Attach average rating and rating count for each service
+        $services->each(function ($service) {
+            $ratings = $service->ordersWithReview;
+            $service->average_rating = $ratings->avg('rating') ?? 0;
+            $service->rating_count = $ratings->count();
+        });
+
+        return view('sections.myservices', compact('services'));
     }
         public function showAllFreelancerServices(Request $request)
         {

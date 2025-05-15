@@ -11,6 +11,17 @@ class UserController extends Controller {
             $freelancers = User::where('role', 'freelancer')->get();
             return view('pages.freelancers', compact('freelancers'));
         }
+
+    // In UserController.php
+    public function listFreelancersIndex()
+        {
+            $freelancers = User::where('role', 'freelancer')->get();
+            return view('pages.home', compact('freelancers'));
+        }
+
+
+
+
     public function index($id)
         {
             $user = User::find($id);

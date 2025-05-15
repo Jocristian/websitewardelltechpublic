@@ -41,13 +41,12 @@
 @include('sections.brands')
 @include('sections.about')
 @include('sections.services')
-@include('sections.team')
+<!-- @include('sections.team', ['freelancers' => $freelancers]) -->
 @include('sections.faqs')
 @include('sections.pricing')
 @include('sections.reviews')
 <!-- @include('sections.blog') -->
 @include('sections.statistics')
-
 @include('layouts.partials.footer')
 @include('layouts.partials.back-to-top')
 

@@ -4,57 +4,105 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 
+use Midtrans\Snap;
+use Midtrans\Transaction;
+use Midtrans\Config;
+
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+\Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+\Midtrans\Config::$clientKey = env('MIDTRANS_CLIENT_KEY'); // optional
+\Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+\Midtrans\Config::$isSanitized = true;
+\Midtrans\Config::$is3ds = true;
+
 class OrderController extends Controller
 {
 
-    // public function show($service_id) {
-    //     $services = Service::where('service_id', $service_id)->firstOrFail();
-    //     return view('pages.orderdetail', compact('services'));
-    // }
-    
-//     public function submitRequirements(Request $request, $id)
-// {
-//     $order = Order::findOrFail($id);
-//     $order->requirements = $request->input('requirements');
-//     $order->status = 'on progress';
-//     $order->save(); 
+    public function quickCreate(Request $request, $service_id)
+{
+    $service = Service::with('user')->where('service_id', $service_id)->firstOrFail();
 
-//     return redirect()->back()->with('success', 'Requirements submitted successfully!');
-// }
+    $order = new Order();
+    $order->buyer_id = auth()->id();
+    $order->seller_id = $service->user_id;
+    $order->service_id = $service_id;
+    $order->deadline = Carbon::now()->addDays(7);
+    $order->status = 'pending';
+    $order->details = '';
+    $order->save();
+
+        return redirect()->route('order.showid', [
+        'service_id' => $service_id,
+        'order_id' => $order->id
+    ]);
+
+}
+
+
+   public function payWithMidtrans($service_id, $order_id)
+{
+    $order = Order::with('service', 'buyer')
+        ->where('id', $order_id)
+        ->where('service_id', $service_id)
+        ->firstOrFail();
+
+    $params = [
+        'transaction_details' => [
+            'order_id' => 'ORDER-' . $order->id,
+            'gross_amount' => $order->service->price,
+        ],
+        'customer_details' => [
+            'first_name' => $order->buyer->name,
+            'email' => $order->buyer->email,
+        ],
+        
+    ];
+
+    $snapToken = Snap::getSnapToken($params);
+
+    return response()->json(['snapToken' => $snapToken]);
+}
 
     public function submit(Request $request, $serviceId)
 {
-    // Validate input
     $request->validate([
         'requirements' => 'required|string|max:2500',
     ]);
 
-    // Insert into database
+    // Cari service berdasarkan ID
+    $service = Service::with('user')->where('service_id', $serviceId)->firstOrFail();
+
     $order = new Order();
-    $order->buyer_id = auth()->id(); // assuming you're using auth
-    $order->seller_id = $request->seller_id;
+    $order->buyer_id = auth()->id();
+    $order->seller_id = $service->user_id; // ← Ambil dari relasi
     $order->deadline = Carbon::now()->addDays(7);
-    $order->service_id = $request->service_id;
+    $order->service_id = $serviceId;
     $order->details = $request->requirements;
-    $order->status = 'on progress'; // or whatever status
+    $order->status = 'on progress';
     $order->save();
 
-    // Redirect back to the same page but with success message
     return redirect()->route('service.show', ['service_id' => $serviceId])
-                     ->with('success', 'Order submitted successfully.');
+                     ->with('success', 'Order berhasil dikirim.');
 }
+
+
 
 
     public function show($service_id)
 {
     $service = Service::with('user')->where('service_id', $service_id)->firstOrFail();
     return view('pages.orderdetail', compact('service'));
+}
+
+ public function showquick($service_id)
+{
+    $service = Service::with('user')->where('service_id', $service_id)->firstOrFail();
+    return view('order.quickCreate', compact('service'));
 }
 
 public function mytransactions()
@@ -106,11 +154,19 @@ public function submitReview(Request $request, $id)
 
 
 
-    public function showid($id) {
+    public function showid($service_id, $order_id)
+{
+    // Find the order that matches both the order_id and belongs to the given service_id
+    $order = Order::with(['service.user', 'buyer'])
+        ->where('id', $order_id)
+        ->where('service_id', $service_id)
+        ->firstOrFail();
 
-    $service = Service::with('user')->where('service_id', $id)->firstOrFail(); // ambil service + relasi user
-    return view('pages.orderdetail', compact('service'));
+    return view('pages.orderdetail', compact('order'));
 }
+
+// Use this where you're initializing transactions (e.g., controller method)
+    
 
     
 

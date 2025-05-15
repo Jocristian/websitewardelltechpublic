@@ -16,5 +16,6 @@
 @yield('myservices')
 @yield('mytransactions')
 @yield('mychats')
+@yield('dashboard')
 <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>

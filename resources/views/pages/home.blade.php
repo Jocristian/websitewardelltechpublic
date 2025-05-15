@@ -6,13 +6,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="hero-text sec-title-animation animation-style2">
-                        <span class="title-animation">The best ways to </span>
-                        <h2 class="title-animation">Grow Your Business</h2>
+                        <span class="title-animation">Cara Terbaik Untuk </span>
+                        <h2 class="title-animation">Membangun Bisnis Anda</h2>
                         <div class="d-flex listing">
-                            <p>We're here to help your business grow by connecting you with talented freelancers</p>
+                            <p>kita bisa membantu anda untuk membangun bisnis anda dengan cara terbaik dan freelancer yang bertalenta</p>
                         </div>
                     </div>
-                    <a href="register" class="button btn"><span><span>click here To Get Started</span></span></a>
+                    <a href="register" class="button btn"><span><span>Klik disini untuk memulai</span></span></a>
                 </div>
             </div>
         </div>
@@ -24,4 +24,5 @@
             <li><img src="/img/shaps-3.png" alt="img"></li>
         </ul>
     </section>
+    @include('sections.team', ['freelancers' => $freelancers])
 @endsection

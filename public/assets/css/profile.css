@@ -16,6 +16,7 @@
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
   --body-font: "Nunito Sans", system-ui;
+  --profile-font: "Rubik", system-ui;
   --normal-font-size: .938rem;
   --smaller-font-size: .75rem;
   --tiny-font-size: .75rem;
@@ -197,6 +198,12 @@ body.dark-theme {
 .sidebar__info h3 {
   font-size: var(--normal-font-size);
   color: var(--title-color);
+  transition: color .4s;
+}
+
+.sidebar__info h5 {
+  font-size: var(--profile-font);
+  color: var(--first-color);
   transition: color .4s;
 }
 
