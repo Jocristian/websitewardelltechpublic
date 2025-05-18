@@ -1,10 +1,9 @@
 <section id="team" class="gap team-section">
     <div class="container">
         <div class="heading sec-title-animation animation-style2">
-            <span class="title-animation">Website that brings leads </span>
-            <h2 class="title-animation">Meet our awesome people </h2>
-            <p>Increase your efficiencies, and create a better experience for everyone involved. Automate your workflows
-                with tools you use every day.</p>
+            <span class="title-animation">Situs web yang membawa lead</span>
+            <h2 class="title-animation">Temui orang-orang hebat kami</h2>
+            <p>Tingkatkan efisiensi Anda, dan buat pengalaman yang lebih baik bagi semua pihak yang terlibat. Otomatiskan alur kerja Anda dengan alat yang Anda gunakan setiap hari.</p>
         </div>
         
         <div class="row">

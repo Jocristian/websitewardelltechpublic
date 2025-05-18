@@ -24,7 +24,7 @@
                         <div><i class="flaticon-iphone"></i></div>
                         <div>
                             <span>Email Address:</span>
-                            <h6><a href="mailto:business@domain.com">WardellTech@gmail.com</a></h6>
+                            <h6><a href="mailto:business@domain.com">WardellTechSupport@gmail.com</a></h6>
                         </div>
                     </div>
                     <div class="get-in-touch mb-0">
