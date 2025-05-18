@@ -228,29 +228,24 @@
 
                      <div class="text-end col-4">
                         {{-- Show review form only if status is finished and not yet reviewed --}}
-                        @if ($order->status === 'finished' && !$order->review)
-                              <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
-                                 @csrf
-                                 <div class="mb-2">
-                                    <label for="rating">Rating</label>
-                                    <div class="star-rating">
-                                       @for ($i = 5; $i >= 1; $i--)
-                                             <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" required />
-                                             <label for="star{{ $i }}" title="{{ $i }} stars">&#9733;</label>
-                                       @endfor
-                                    </div>
+                       @if ($order->status === 'finished')
+                        <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
+                           @csrf
+                           <div class="mb-2">
+                                 <label for="rating">Rating</label>
+                                 <div class="star-rating">
+                                    @for ($i = 5; $i >= 1; $i--)
+                                       <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" required {{ $order->rating == $i ? 'checked' : '' }} />
+                                       <label for="star{{ $i }}" title="{{ $i }} stars">&#9733;</label>
+                                    @endfor
                                  </div>
-                                 <div class="mb-4">
-                                    <textarea name="review" rows="2" class="form-control" placeholder="Write your review..." required></textarea>
-                                 </div>
-                                 <button type="submit" class="btn btn-success">Submit Review</button>
-                              </form>
-                        @elseif ($order->review)
-                              <div>
-                                 <strong>Your Rating:</strong> {{ $order->rating }} / 5<br>
-                                 <strong>Review:</strong> {{ $order->review }}
-                              </div>
-                        @endif
+                           </div>
+                           <div class="mb-4">
+                                 <textarea name="review" rows="2" class="form-control" placeholder="Write your review..." required>{{ $order->review }}</textarea>
+                           </div>
+                           <button type="submit" class="btn btn-success">Update Review</button>
+                        </form>
+                     @endif
                      </div>
                   </div>
             </div>
