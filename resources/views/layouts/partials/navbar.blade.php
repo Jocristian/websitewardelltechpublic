@@ -20,7 +20,9 @@
                         <a href="{{ url('/freelancers') }}">Freelancer</a>
                     </li>
                     <li class="navbar-dropdwon">
-                        <a href="{{ auth()->check() ? url('/profile') : url('/login') }}"><i class="fas fa-user-circle" style="margin-top: 4px;"></i>
+                        
+                        <a href="{{ auth()->check() && auth()->user()->role == 'admin' ? url('/users') : (auth()->check() ? url('/profile') : url('/login')) }}">
+                        <i class="fas fa-user-circle" style="margin-top: 4px;"></i>
                         </a>
                     </li>
                 </ul>
