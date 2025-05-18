@@ -7,7 +7,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Models\User;
+
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckBanned;
 
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -82,16 +86,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/services/{service_id}/orderdetail/{order_id}/pay', [OrderController::class, 'payWithMidtrans'])->name('order.pay');
     Route::get('/services/{service_id}/orderdetail/{order_id}', [OrderController::class, 'showid'])->name('order.showid');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/admindashboard', [AdminDashboardController::class, 'index'])->name('admindashboard')->middleware('admin','auth');
 
 
 
 
 
     Route::get('/mytransactions', [OrderController::class, 'mytransactions'])->name('mytransactions');
-
     Route::post('/order/quick/{service_id}', [OrderController::class, 'quickCreate'])->name('order.quickCreate');
     Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatusAjax']);
-
     Route::get('/order/quick/{service_id}', [OrderController::class, 'showquick'])->name('order.showquick');
     Route::get('/order/payment/{service_id}/{order_id}', [OrderController::class, 'showPaymentPage'])->name('order.payment.page');  
 
@@ -109,9 +112,6 @@ Route::middleware(['auth'])->group(function () {
     // Pay route
     Route::get('/services/{service_id}/orderdetail/{order_id}/pay', [OrderController::class, 'payWithMidtrans'])->name('order.pay');
 });
-
-
-
 
 Route::get('/storage', function () {
     Artisan::call('storage:link');
@@ -134,37 +134,34 @@ Route::middleware('auth')->group(function () {
     Route::get('/services/{service_id}', [ServiceController::class, 'show'])->name('service.show');
     // Route::get('/services/{service_id}', [ServiceController::class, 'showid'])->name('services.showid');
     Route::get('/services/freelancers', [ServiceController::class, 'showAllFreelancerServices']);
+    Route::get('/freelancers', [UserController::class, 'listFreelancers'])->name('pages.freelancers');
 });
 
-
-
 Route::get('/services', [ServiceController::class, 'showAllFreelancerServices'])->name('services');
-
 Route::delete('/services/{service}', [PostServicesController::class, 'destroy'])->name('services.destroy');
-
-Route::get('/freelancers', [UserController::class, 'listFreelancers'])->name('pages.freelancers');
 Route::get('/base', [UserController::class, 'listFreelancersIndex'])->name('freelancers.index');
-// Route::get('/freelancer/{id}', [ProfileController::class, 'show'])->name('freelancer.profile');
 Route::get('/my-profile/{id}', [ProfileController::class, 'show'])->name('my-profile');
 
 
+    Route::post("/register", [RegisterController::class, 'register']) -> name("register");
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-
-
-
-
-
-
-Route::post("/register", [RegisterController::class, 'register']) -> name("register");
-
-// Proses login
-Route::post('/login', [LoginController::class, 'login']);
-// Logout
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/postservice', [PostServicesController::class, 'store'])->name('postservice');
-
-
 Route::get('/my-profile/freelancers', [UserController::class, 'listFreelancers'])->name('pages.freelancers');
+
+// Route::middleware(['auth', 'admin'])->group(function () {
+//     Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users');
+//     Route::post('/admin/users/{id}/ban', [App\Http\Controllers\AdminController::class, 'ban'])->name('admin.users.ban');
+// });
+
+Route::get('/users', [App\Http\Controllers\AdminController::class, 'index'])->name('sections.users')->middleware(['admin','auth']);
+Route::post('/users/{id}/ban', [App\Http\Controllers\AdminController::class, 'ban'])->name('sections.users.ban')->middleware('admin','auth');
+
+
+// Route::get('/profile', function () {
+//     // ...
+// })->middleware(EnsureTokenIsValid::class);

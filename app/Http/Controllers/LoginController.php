@@ -9,24 +9,35 @@ class LoginController extends Controller {// Menampilkan form login
 
     // Proses login
     public function login(Request $request)
-    {
-        // Validasi data
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        {
+            // Validasi data login
+            $credentials = $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required'],
+            ]);
 
-        // Coba login
-        if (auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/'); // Ganti sesuai kebutuhan
+            // Coba login
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+
+                // Cek apakah user dibanned
+                if (Auth::user()->is_banned) {
+                    Auth::logout(); // Logout langsung
+                    return redirect('/login')->withErrors([
+                        'email' => 'Akun Anda telah dibanned.',
+                    ]);
+                }
+
+                // Jika tidak dibanned, lanjut ke halaman tujuan
+                return redirect()->intended('/');
+            }
+
+            // Kalau gagal login
+            return back()->withErrors([
+                'email' => 'Email atau password salah.',
+            ])->onlyInput('email');
         }
 
-        // Kalau gagal login
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
-    }
 
     // Proses logout
     public function logout(Request $request)

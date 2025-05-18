@@ -20,12 +20,13 @@
                         <h3>Login</h3>
                         <h6>Email and Password</h6>
                         <input type="email" name="email" placeholder="Email Address" required="">
-                        @error('email')
-                        <p class="text-red-200">{{ $message }}</p>
-                        @enderror
+                        
                         <input type="password" name="password" placeholder="Password" required="">
+                        @error('email')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                         @error('password')
-                        <p class="text-red-200">{{ $message }}</p>
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <button type="submit" class="button btn"><span><span>Submit Now</span></span></button>
                         <!--   -->

@@ -8,7 +8,7 @@
         </div>
         
         <div class="row">
-            @forelse ($freelancers as $freelancer)
+            @forelse ($freelancers->take(3) as $freelancer)
                 <div class="col-lg-4 col-md-6">
                     <div class="team">
                         <div class="expert-icon">
@@ -36,17 +36,6 @@
             @empty
                 <p>No freelancers found.</p>
             @endforelse
-        </div>
-        <div class="center review">
-            <img alt="img" src="/img/google-w.png">
-            <ul class="star">
-                <li><i class="fa-solid fa-star"></i></li>
-                <li><i class="fa-solid fa-star"></i></li>
-                <li><i class="fa-solid fa-star"></i></li>
-                <li><i class="fa-solid fa-star"></i></li>
-                <li><i class="fa-solid fa-star"></i></li>
-            </ul>
-            <h6>(5.0) </h6>
         </div>
     </div>
     <ul class="shaps-img">

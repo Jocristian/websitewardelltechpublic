@@ -87,5 +87,5 @@ class DashboardController extends Controller
         'monthLabels',
     ));
 }
-}
+};
 
