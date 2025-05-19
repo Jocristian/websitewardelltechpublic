@@ -245,6 +245,14 @@
                            </div>
                            <button type="submit" class="btn btn-success">Update Review</button>
                         </form>
+                        <form action="{{ route('order.updateStatus', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your review?');">
+                           @csrf
+                           @method('PUT') {{-- Sesuaikan dengan method di route --}}
+                           <input type="hidden" name="delete_review" value="1">
+                           <button type="submit" class="btn btn-danger mt-2">Delete Review</button>
+                        </form>
+
+
                      @endif
                      </div>
                   </div>

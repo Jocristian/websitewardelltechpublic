@@ -177,6 +177,11 @@
             <!-- Submit -->
             <button type="submit" class="btn btn-primary w-100">Save Changes</button>
          </form>
+            <form class="my-2" action="{{ route('profile.destroy') }}" method="POST" onsubmit="return confirm('Apakah anda yakin anda ingin menghapus akun anda?');">
+               @csrf
+               @method('DELETE')
+               <button type="submit" class="btn btn-danger w-100">Delete Account</button>
+            </form>
          </div>
    </main>
 

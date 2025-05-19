@@ -135,11 +135,30 @@ public function mytransactions()
     public function updateStatus(Request $request, $id)
 {
     $order = Order::findOrFail($id);
-    $order->status = $request->input('status');
+
+    // Pastikan hanya pemilik order yang bisa update
+
+    if ($request->has('delete_review')) {
+        $order->rating = null;
+        $order->review = null;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Review deleted.');
+    }
+
+    // Validasi jika tidak menghapus
+    $validated = $request->validate([
+        'rating' => 'required|integer|min:1|max:5',
+        'review' => 'required|string|max:1000',
+    ]);
+
+    $order->rating = $validated['rating'];
+    $order->review = $validated['review'];
     $order->save();
 
-    return back()->with('success', 'Order status updated.');
+    return redirect()->back()->with('success', 'Review updated.');
 }
+
 
 
 public function submitReview(Request $request, $id)
@@ -165,7 +184,21 @@ public function submitReview(Request $request, $id)
     return view('pages.orderdetail', compact('order'));
 }
 
-// Use this where you're initializing transactions (e.g., controller method)
+public function deleteReview($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Pastikan user hanya bisa menghapus review miliknya
+    
+
+    $order->rating = null;
+    $order->review = null;
+    $order->save();
+
+    return redirect()->back()->with('success', 'Review deleted successfully.');
+}
+
+
     
 
     

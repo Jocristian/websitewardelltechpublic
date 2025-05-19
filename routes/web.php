@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/quick/{service_id}', [OrderController::class, 'showquick'])->name('order.showquick');
     Route::get('/order/payment/{service_id}/{order_id}', [OrderController::class, 'showPaymentPage'])->name('order.payment.page');  
 
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+
+
 
 
 });

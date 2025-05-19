@@ -55,5 +55,19 @@ class ProfileController extends Controller
             return view('pages.my-profile', compact('user', 'services'));
         }
 
+        public function destroy()
+        {
+            $user = Auth::user();
+
+            // Optional: hapus foto profil jika ada
+
+            Auth::logout();
+
+            $user->delete(); // hapus user dari database
+
+            return redirect('/')->with('success', 'Your account has been deleted.');
+        }
+
+
         
 }
