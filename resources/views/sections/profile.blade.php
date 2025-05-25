@@ -61,65 +61,7 @@
    </header>
 
    <!--=============== SIDEBAR ===============-->
-   <nav class="sidebar" id="sidebar">
-      <div class="sidebar__container">
-         <a href="{{ route('home') }}">
-         <div class="sidebar__user">
-                <img alt="logo-heading" src="/img/logoheading.png" style="height: 50px">
-                <div class="sidebar__info h5 my-2">
-                    <h5 class="text-center my-2"><p style="font-size: 50px, font-family: Rubik">Wardell Tech</p></h5>
-                </div>
-         </div>
-        </a>
-
-         <div class="sidebar__content">
-            <div>
-               <h3 class="sidebar__title">MANAGE</h3>
-
-               <div class="sidebar__list">
-
-                  <a href="{{ route('dashboard') }}" class="sidebar__link {{ request()->is('dashboard') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Dashboard</span>
-                  </a>
-
-
-                  <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Edit Profile</span>
-                  </a>
-
-                  <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>Recent Transactions</span>
-                  </a>
-
-                  @if (auth() -> user() -> role == 'freelancer' )
-                  <a href="myservices" class="sidebar__link">
-                        <i class="ri-arrow-up-down-line"></i>
-                        <span>My Services</span>
-                     </a>
-
-                     <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>My Messages</span>
-                     </a>
-                  @endif
-
-               </div>
-            </div>
-            <div class="sidebar__actions">
-         <div class="sidebar__actions">
-            <form action="{{ route('logout') }}" method="POST">
-               @csrf
-               <button class="sidebar__link">
-                  <i class="ri-logout-box-r-fill"></i>
-                  <span>Log Out</span>
-               </button>
-            </form>
-         </div>
-      </div>
-   </nav>
+@include('layouts.partials.sidenav')
    <!--=============== MAIN ===============-->
    <main class="main" id="main">
          <div class="profile-card">
@@ -136,7 +78,7 @@
 
             <!-- Full Name -->
             <div class="mb-3">
-                  <label class="form-label"><strong>Full Name</strong></label>
+                  <label class="form-label"><strong>Nama Pengguna</strong></label>
                   <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}" required>
             </div>
 
@@ -148,26 +90,26 @@
 
             <!-- Phone Number -->
             <div class="mb-3">
-                  <label class="form-label"><strong>Phone Number</strong></label>
+                  <label class="form-label"><strong>Nomor Telepon</strong></label>
                   <input type="text" name="phone_number" class="form-control" value="{{ Auth::user()->phone_number }}" required>
             </div>
 
             <!-- About Me -->
             <div class="mb-3">
-               <label class="form-label"><strong>About Me</strong></label>
+               <label class="form-label"><strong>Tentang Saya</strong></label>
                <textarea name="about_me" class="form-control" rows="4" placeholder="Tell us something about yourself">{{ Auth::user()->about_me }}</textarea>
             </div>
 
 
             <!-- Profile Photo -->
             <div class="mb-3">
-                  <label class="form-label"><strong>Profile Photo</strong></label>
+                  <label class="form-label"><strong>Foto Profil</strong></label>
                   <input type="file" name="profile_photo" class="form-control">
             </div>
 
             <!-- Online Status -->
             <div class="mb-3">
-                  <label class="form-label"><strong>Online Status</strong></label>
+                  <label class="form-label"><strong>Status Keaktifan</strong></label>
                   <select name="is_online" class="form-select">
                      <option value="1" {{ Auth::user()->is_online ? 'selected' : '' }}>Online</option>
                      <option value="0" {{ !Auth::user()->is_online ? 'selected' : '' }}>Offline</option>

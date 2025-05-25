@@ -37,7 +37,7 @@
                 <h3 class="text-lg font-semibold">{{ $freelancer->name }}</h3>
                 <p class="text-gray-600">{{ $freelancer->email }}</p>
                 <span class="badge bg-success mt-2">Freelancer</span>
-                <p class="text-gray-600 text-center">
+                <p class="text-secondary my-2 text-gray-600 text-center">
                     {{ \Illuminate\Support\Str::limit($freelancer->about_me, 30) }}
                     @if (strlen($freelancer->about_me) > 30)
                         <a href="{{ route('my-profile', $freelancer->id) }}" class="text-blue-600 font-bold hover:underline">See more</a>
@@ -45,7 +45,7 @@
                         <a href="{{ route('my-profile', $freelancer->id) }}" class="text-blue-600 font-bold hover:underline">Show Profile</a>
                     @endif
                 </p>
-                <p class="ttext-gray-600">joined since {{ $freelancer->created_at->format('M d, Y') }}</p>
+                <p class="ttext-gray-600">Bergabung Sejak {{ $freelancer->created_at->format('M d, Y') }}</p>
 
             </div>
         @empty

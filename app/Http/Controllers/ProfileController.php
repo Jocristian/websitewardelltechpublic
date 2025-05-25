@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Portfolio;
 
 class ProfileController extends Controller
 {
@@ -49,10 +50,11 @@ class ProfileController extends Controller
         {
             $user = User::findOrFail($id);
             $services = Service::where('user_id', $id)->get();
+            $portfolios = Portfolio::where('user_id', $id)->get(); // Tambahkan ini
 
-            // dd($user, $services);
+            // dd($user, $services, $portfolios); // Untuk debug jika diperlukan
 
-            return view('pages.my-profile', compact('user', 'services'));
+            return view('pages.my-profile', compact('user', 'services', 'portfolios'));
         }
 
         public function destroy()

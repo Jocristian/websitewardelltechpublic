@@ -46,24 +46,15 @@
       <!-- Image carousel -->
       <div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
         <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ asset('storage/' . $services->photo) }}" style="width: 300px; height: 500px; object-fit: cover;" class="d-block w-100 product-image" alt="{{ $services->overview }}">
-        </div>
-          <div class="carousel-item">
-            <img src="{{ asset('storage/' . $services->photo) }}" style="width: 300px; height: 500px; object-fit: cover;" class="d-block w-100 product-image" alt="{{ asset('storage/' . $services->photo) }}">
+          <div class="carousel-item active">
+            <img src="{{ asset('storage/' . $services->photo) }}" style="width: 300px; height: 500px; object-fit: cover;" class="d-block w-100 product-image" alt="{{ $services->overview }}">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
       </div>
 
       <!-- Description -->
         <h1>{{ $services->overview }}</h1>
-        <p>{{ $services->description }}</p>
+        <p>{!! nl2br(e($services->description)) !!}</p>
       
 
       <!-- Overview -->
@@ -78,7 +69,7 @@
       </ul> -->
 
       <!-- Reviews -->
-      <h3 class="mt-4">Reviews</h5>
+      <h3 class="my-4">Ulasan</h5>
       @if($services->ordersWithReview->count() > 0)
           @foreach($services->ordersWithReview as $review)
               <div class="card mb-3">
@@ -95,7 +86,7 @@
               </div>
           @endforeach
       @else
-          <p>There is no review yet.</p>
+          <p>Belum Ada Ulasan</p>
       @endif
     </div>
 
@@ -110,11 +101,10 @@
         @if($services->ordersWithReview->isNotEmpty())
             <span>⭐ {{ number_format($averageRating, 1) }} ({{ $totalReviews }} reviews)</span>
         @else
-            <span>No reviews yet</span>
+            <span>Belum ada ulasan</span>
         @endif
        
         </div>
-        <p><del class="text-muted">Rp{{ number_format($services->price + 100000, 0, ',', '.') }}</del></p>
         <h4 class="text-primary fw-bold">Rp{{ number_format($services->price, 0, ',', '.') }}</h4>
 
 
@@ -126,15 +116,15 @@
         @if (!$isOwner && !$isFreelancer)
             <form method="POST" action="{{ route('order.quickCreate', $services->service_id) }}">
                 @csrf
-                <button type="submit" class="btn btn-primary w-100 my-2">Continue</button>
+                <button type="submit" class="btn btn-primary w-100 my-2">Pesan</button>
             </form>
-            <button class="btn btn-outline-dark w-100" id="chat-toggle-btn">Contact me</button>
+            <button class="btn btn-outline-dark w-100" id="chat-toggle-btn">Kontak Saya</button>
         @else
             <p class="text-danger text-center">You cannot order your own service or you are a freelancer.</p>
         @endif
 
         <div class="text-center mt-3">
-          <a href="#"><i class="bi bi-share"></i> Share</a>
+          <a href="#"><i class="bi bi-share"></i>Bagi</a>
         </div>
       </div>
       <div class="bg-white rounded-lg shadow mt-4 text-center p-4">
@@ -151,7 +141,7 @@
               <p class="text-sm text-gray-500"></p>
 
               <div class="mt-4 flex justify-center gap-2">
-                  <a href="{{ route('my-profile', $user->id) }}" class="bg-gray-500 text-white text-sm px-3 py-1 rounded hover:bg-gray-700">See Profile</a>
+                  <a href="{{ route('my-profile', $user->id) }}" class="bg-gray-500 text-white text-sm px-3 py-1 rounded hover:bg-gray-700">Lihat Profil</a>
               </div>
           </div>
 

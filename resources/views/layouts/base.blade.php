@@ -22,18 +22,7 @@
 </head>
 <body>
 <!-- preloader -->
-<div class="preloader">
-    <div class="loading-text">
-        <span>L</span>
-        <span>O</span>
-        <span>A</span>
-        <span>D</span>
-        <span>I</span>
-        <span>N</span>
-        <span>G</span>
-    </div>
-</div>
-
+@include('layouts.partials.preloader')
 @include('layouts.partials.navbar')
 
 @yield('content')
@@ -41,11 +30,9 @@
 @include('sections.brands')
 @include('sections.about')
 @include('sections.services')
-<!-- @include('sections.team', ['freelancers' => $freelancers]) -->
 @include('sections.faqs')
 @include('sections.pricing')
 @include('sections.reviews')
-<!-- @include('sections.blog') -->
 @include('sections.statistics')
 @include('layouts.partials.footer')
 @include('layouts.partials.back-to-top')

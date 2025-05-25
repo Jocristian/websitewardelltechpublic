@@ -28,7 +28,7 @@
 <section class="container mx-auto px-4 py-6 mt-21" style="padding-top: 200px">
   <!-- Header Section -->
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-semibold">Check Out Our Top Rated Services</h1>
+    <h1 class="text-3xl font-semibold">Periksa Layanan Terbaik Kami</h1>
   </div>
 
   <!-- Cards Section -->
@@ -59,7 +59,7 @@
 
   <!-- Our Services (Filter Section) -->
 <div class="flex justify-between items-center mt-12 mb-6 relative">
-  <h1 class="text-3xl font-semibold">Our Services</h1>
+  <h1 class="text-3xl font-semibold">jasa Kami</h1>
   
   <!-- Icon Filter -->
   <!-- <button id="filterToggle" class="p-2 rounded-lg hover:bg-gray-100 transition">

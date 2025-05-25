@@ -1,40 +1,40 @@
 @extends('layouts.login')
 
 @section('register')
-    <section class="hero-section";>
+    <section class="hero-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
                     <div class="hero-text sec-title-animation animation-style2">
-                        <span class="title-animation">The best ways to </span>
-                        <h2 class="title-animation">Promote a New Service</h2>
+                        <span class="title-animation">Cara terbaik untuk </span>
+                        <h2 class="title-animation">Mempromosikan Layanan Baru</h2>
                         <div class="d-flex listing">
-                            <p>Scale up your business with the freelancer by building your own digital platform to promote.</p>
+                            <p>Kembangkan bisnismu bersama freelancer dengan membangun platform digitalmu sendiri untuk promosi.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/login" style="margin-top: 45px;"``>
+                    <form role="form" class="get-a-quote" id="contact-form" method="post" action="/login" style="margin-top: 45px;">
                         @csrf
                         <img src="/img/fom-img.png" alt="img">
-                        <h3>Login</h3>
-                        <h6>Email and Password</h6>
-                        <input type="email" name="email" placeholder="Email Address" required="">
+                        <h3>Masuk</h3>
+                        <h6>Email dan Kata Sandi</h6>
+                        <input type="email" name="email" placeholder="Alamat Email" required="">
                         
-                        <input type="password" name="password" placeholder="Password" required="">
+                        <input type="password" name="password" placeholder="Kata Sandi" required="">
                         @error('email')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                         @error('password')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <button type="submit" class="button btn"><span><span>Submit Now</span></span></button>
-                        <!--   -->
-                        <div class="text-center pt-3"><a class="text-center" href="register">Dont Have an Account?</a></div>
+                        <button type="submit" class="button btn"><span><span>Kirim Sekarang</span></span></button>
+                        
+                        <div class="text-center pt-3"><a class="text-center" href="register">Belum punya akun?</a></div>
                         <div class="text-center primary pt-3">
                             <strong>
                                 <a class="text-center" href="/">
-                                    <i class="fas fa-arrow-left"></i> Go Back
+                                    <i class="fas fa-arrow-left"></i> Kembali
                                 </a>
                             </strong>
                         </div>
@@ -53,4 +53,3 @@
     </section>
     @include('layouts.partials.footer')
 @endsection
-

@@ -22,12 +22,11 @@ s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.h
     right: 30px;
     width: 400px;
     height: 600px;
-    background: white;
+    background: none;
     display: none;
     z-index: 1000;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 ">
     <i>Loading chat...</i>
 </div>

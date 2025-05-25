@@ -13,7 +13,7 @@
       <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
          <div class="header__container">
-            <a href="{{ route('my-profile', auth()->user()->id) }}" class="header__logo">
+            <a href="{{ route('my-profile', auth()->user()->id) }}" style="height: 100%; width: auto;" class="header__logo" >
                 <div class="sidebar__info mx-2">
                 <h3><p class="text-end" class="font-semibold"> {{auth()-> user()->name }}</p></h3>
                 <span> {{ auth()-> user()->email}} </span>
@@ -73,69 +73,81 @@
       </header>
 
    <!--=============== SIDEBAR ===============-->
-   <nav class="sidebar" id="sidebar">
-      <div class="sidebar__container">
-         <a href="{{ route('home') }}">
-         <div class="sidebar__user">
-                <img alt="logo-heading" src="/img/logoheading.png" style="height: 50px">
-                <div class="sidebar__info h5 my-2">
-                    <h5 class="text-center my-2"><p style="font-size: 50px, font-family: Rubik">Wardell Tech</p></h5>
-                </div>
+@include('layouts.partials.sidenav')
+   <!--=============== MAIN ===============-->
+   <main class="main mx-5" id="main">
+   <div class="container my-5">
+
+        <!-- filter -->
+   <form method="GET" action="{{ route('mytransactions') }}" class="mb-4">
+      <div class="row g-2 align-items-end">
+
+         <!-- {{-- Rentang Tanggal --}}
+         <div class="col-md-2">
+            <label for="start_date" class="form-label">Dari Tanggal</label>
+            <input type="date" name="start_date" id="start_date" class="form-control"
+               value="{{ request('start_date') }}">
          </div>
-        </a>
 
-         <div class="sidebar__content">
-            <div>
-               <h3 class="sidebar__title">MANAGE</h3>
+         <div class="col-md-2">
+            <label for="end_date" class="form-label">Sampai Tanggal</label>
+            <input type="date" name="end_date" id="end_date" class="form-control"
+               value="{{ request('end_date') }}">
+         </div> -->
+         <div class="col-md-2">
+         <label for="overview" class="form-label">Nama Jasa</label>
+         <input type="text" name="overview" value="{{ request('overview') }}" class="form-control" placeholder="Masukkan Nama Jasa">
+         </div>
 
-               <div class="sidebar__list">
+         {{-- Rentang Harga --}}
+         <div class="col-md-2">
+            <label for="min_price" class="form-label">Harga Min</label>
+            <input type="number" name="min_price" id="min_price" class="form-control"
+               placeholder="0" value="{{ request('min_price') }}">
+         </div>
 
-               <a href="{{ route('dashboard') }}" class="sidebar__link">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Dashboard</span>
-                  </a>
+         <div class="col-md-2">
+            <label for="max_price" class="form-label">Harga Max</label>
+            <input type="number" name="max_price" id="max_price" class="form-control"
+               placeholder="999" value="{{ request('max_price') }}">
+         </div>
 
+         {{-- Status --}}
+         <div class="col-md-2">
+            <label for="status" class="form-label">Status</label>
+            <select name="status" id="status" class="form-select">
+               <option value="">Semua</option>
+               <option value="on progress" {{ request('status') == 'on progress' ? 'selected' : '' }}>On Progress</option>
+               <option value="finished" {{ request('status') == 'finished' ? 'selected' : '' }}>Finished</option>
+               <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+            </select>
+         </div>
 
-                  <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Edit Profile</span>
-                  </a>
-
-                  <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>Recent Transactions</span>
-                  </a>
-
-                  @if (auth() -> user() -> role == 'freelancer' )
-                  <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>My Services</span>
-                  </a>
-                  
-                  <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>My Messages</span>
-                  </a>
-                  @endif
-
-               </div>
-            </div>
-            <div class="sidebar__actions">
-         <div class="sidebar__actions">
-            <form action="{{ route('logout') }}" method="POST">
-               @csrf
-               <button class="sidebar__link">
-                  <i class="ri-logout-box-r-fill"></i>
-                  <span>Log Out</span>
-               </button>
-            </form>
+         {{-- Sort --}}
+         <div class="col-md-2">
+            <label for="sort_price" class="form-label">Urutkan</label>
+            <select name="sort_price" id="sort_price" class="form-select">
+               <option value="">Harga</option>
+               <option value="low_high" {{ request('sort_price') == 'low_high' ? 'selected' : '' }}>Termurah</option>
+               <option value="high_low" {{ request('sort_price') == 'high_low' ? 'selected' : '' }}>Termahal</option>
+            </select>
+         </div>
+         <div class="col-md-2">
+            <select name="sort_date" id="sort_date" class="form-select">
+               <option value="">Tanggal</option>
+               <option value="newest" {{ request('sort_date') == 'newest' ? 'selected' : '' }}>Terbaru</option>
+               <option value="oldest" {{ request('sort_date') == 'oldest' ? 'selected' : '' }}>Terlama</option>
+            </select>
          </div>
       </div>
-   </nav>
-
-   <!--=============== MAIN ===============-->
-   <main class="main mx-5" id="main"> 
-        <!-- Button trigger modal -->
+      {{-- Tombol --}}
+      <div class="row">
+            <div class="text-end mt-2">
+               <button type="submit" class="btn btn-primary mx-2 w-20" style="padding-top: 5px ; padding-bottom: 5px">Filter</button>
+               <!-- <a href="{{ route('mytransactions') }}" class="btn text-center">Reset</a> -->
+            </div>
+      </div>
+   </form>
 
 
 
@@ -143,75 +155,98 @@
     @if (auth() -> user() -> role == 'freelancer' )
          @foreach ($order as $order)
             @if ($order->status !== 'pending')
-            <div class="card mb-3 p-3 d-flex flex-row align-items-center justify-content-between">
-               <div class="d-flex align-items-center">
-                  <img src="{{ asset('storage/' . $order->service->photo) }}" class="me-3 rounded" style="height: 100px; max-width: 100px; object-fit: cover;">
-                  <div>
-                     <div><strong>{{ $order->service->overview }}</strong></div>
-                     <div><strong>Price:</strong> ${{ $order->service->price }}</div>
-                     <div><strong>Due In:</strong> {{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}</div>
-                     <div><strong>Status:</strong> {{ $order->status }}</div>
+            <div class="card shadow-sm mb-4 border-0 rounded-4">
+               <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+                  <div class="d-flex align-items-center">
+                        <a href="{{ url('services/' . $order->service->service_id) }}">
+                        <img src="{{ asset('storage/' . $order->service->photo) }}" alt="Service Image"
+                           class="rounded-3 me-4" style="height: 100px; width: 100px; object-fit: cover;">
+                        </a>
+                        <div>
+                           <h5 class="mb-1">{{ $order->service->overview }}</h5>
+                           <p class="mb-1 text-muted">Price: <strong>${{ $order->service->price }}</strong></p>
+                           <p class="mb-1 text-muted">Due in: <strong>{{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}</strong></p>
+                           <p class="mb-0">Status: 
+                              <span class="badge 
+                                    @if($order->status == 'on progress') bg-warning text-dark 
+                                    @elseif($order->status == 'finished') bg-success 
+                                    @else bg-secondary 
+                                    @endif">
+                                    {{ ucfirst($order->status) }}
+                              </span>
+                           </p>
+                        </div>
+                  </div>
+                  
+                  <div class="mt-3 mt-md-0 text-end">
+                        <form method="POST" action="{{ route('order.updateStatus', $order->id) }}">
+                           @csrf
+                           @method('PUT')
+                           <div class="mb-2">
+                              <select name="status" class="form-select form-select-sm">
+                                    <option value="on progress" {{ $order->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
+                                    <option value="finished" {{ $order->status == 'finished' ? 'selected' : '' }}>Finished</option>
+                              </select>
+                              <button type="submit" class="btn btn-sm btn-primary w-100 mb-2 mt-2 mr-2">Update</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#orderDetailsModal-{{ $order->id }}">
+                                 View Details
+                              </button>
+                           </div>         
+                        </form>
                   </div>
                </div>
-            
-               <form method="POST" action="{{ route('order.updateStatus', $order->id) }}">
-                  @csrf
-                  @method('PUT')
-                  <select name="status" class="form-select">
-                     
-                     <option value="on progress" {{ $order->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
-                     <option value="finished" {{ $order->status == 'finished' ? 'selected' : '' }}>Finished</option>
-                  </select>
-                  <button type="submit" class="btn btn-sm btn-primary mt-2">Update</button>
-                  <button class="btn btn-sm btn-secondary mt-2" type="button" data-bs-toggle="modal" data-bs-target="#orderDetailsModal-{{ $order->id }}">
-                  View Details
-               </button>
-               </form>
-            
-               <!-- View Details button -->
-               
             </div>
-            
+
             <!-- Order Details Modal -->
             <div class="modal fade" id="orderDetailsModal-{{ $order->id }}" tabindex="-1" aria-labelledby="orderDetailsModalLabel-{{ $order->id }}" aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="orderDetailsModalLabel-{{ $order->id }}">Order Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                        <p><strong>Order ID:</strong> {{ $order->id }}</p>
-                        <p><strong>Service:</strong> {{ $order->service->overview }}</p>
-                        <p><strong>Requirements:</strong> {{ $order->details }}</p>
-                        <p><strong>Price:</strong> ${{ $order->service->price }}</p>
-                        <p><strong>Deadline:</strong> {{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d H:i:s') }}</p>
-                        <p><strong>Status:</strong> {{ $order->status }}</p>
-                        @if ($order->status === 'finished' && $order->review)
-                           <strong>Your Rating:</strong> {{ $order->rating }} / 5<br>
-                           <strong>Review:</strong> {{ $order->review }}
+               <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content rounded-4">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="orderDetailsModalLabel-{{ $order->id }}">Order Details</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <p><strong>Order ID:</strong> {{ $order->id }}</p>
+                           <p><strong>Service:</strong> {{ $order->service->overview }}</p>
+                           <p><strong>Requirements:</strong> {{ $order->details }}</p>
+                           <p><strong>Price:</strong> ${{ $order->service->price }}</p>
+                           <p><strong>Deadline:</strong> {{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d H:i:s') }}</p>
+                           <p><strong>Status:</strong> 
+                              <span class="badge 
+                                    @if($order->status == 'on progress') bg-warning text-dark 
+                                    @elseif($order->status == 'finished') bg-success 
+                                    @else bg-secondary 
+                                    @endif">
+                                    {{ ucfirst($order->status) }}
+                              </span>
+                           </p>
 
-                        @endif
-
-                     </div>
-                     <div class="modal-footer">
-                        
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     </div>
+                           @if ($order->status === 'finished' && $order->review)
+                              <p><strong>Your Rating:</strong> {{ $order->rating }} / 5</p>
+                              <p><strong>Review:</strong> {{ $order->review }}</p>
+                           @endif
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                        </div>
                   </div>
                </div>
             </div>
             @endif
-         @endforeach
+            @endforeach
+
       @else (auth() -> user() -> role == 'customer' )
          @foreach ($order as $order)
             @if ($order->status !== 'pending')
             <div class="card mb-4">
                   <div class="card-body d-flex justify-content-between align-items-center">
                      <div class="d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $order->service->photo) }}" alt="Service" width="80" class="me-3 rounded">
-                        <div>
-                              <h5>{{ $order->service->overview }}</h5>
+                        <a href="{{ url('services/' . $order->service->service_id) }}">
+                           <img src="{{ asset('storage/' . $order->service->photo) }}" alt="Service" width="80" class="me-3 rounded">
+                        </a>
+                        <div> <div class="mb-2">
+                              <h5 class>{{ $order->service->overview }}</h5>
+                              </div>
                               <p class="mb-1">Price: <strong>${{ $order->service->price }}</strong></p>
                               <p class="mb-1">Due In:
                                  <strong>
@@ -229,30 +264,58 @@
                      <div class="text-end col-4">
                         {{-- Show review form only if status is finished and not yet reviewed --}}
                        @if ($order->status === 'finished')
-                        <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
+                        <!-- Tombol untuk membuka modal -->
+                        <button type="button" class="btn btn-success w-50" data-bs-toggle="modal" data-bs-target="#reviewModal{{ $order->id }}">
+                           Ulasan
+                        </button>
+                        <!-- Tombol hapus ulasan di tengah -->
+                        <form action="{{ route('order.updateStatus', $order->id) }}" method="POST" 
+                              onsubmit="return confirm('Yakin ingin menghapus ulasan?');" >
                            @csrf
-                           <div class="mb-2">
-                                 <label for="rating">Rating</label>
-                                 <div class="star-rating">
-                                    @for ($i = 5; $i >= 1; $i--)
-                                       <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" required {{ $order->rating == $i ? 'checked' : '' }} />
-                                       <label for="star{{ $i }}" title="{{ $i }} stars">&#9733;</label>
-                                    @endfor
-                                 </div>
-                           </div>
-                           <div class="mb-4">
-                                 <textarea name="review" rows="2" class="form-control" placeholder="Write your review..." required>{{ $order->review }}</textarea>
-                           </div>
-                           <button type="submit" class="btn btn-success">Update Review</button>
-                        </form>
-                        <form action="{{ route('order.updateStatus', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your review?');">
-                           @csrf
-                           @method('PUT') {{-- Sesuaikan dengan method di route --}}
+                           @method('PUT')
                            <input type="hidden" name="delete_review" value="1">
-                           <button type="submit" class="btn btn-danger mt-2">Delete Review</button>
+                           <button type="submit" class="btn btn-danger mt-2 w-50">
+                              Hapus Ulasan
+                           </button>
                         </form>
+                                 
+                        <!-- Modal -->
+                           <div class="modal fade" id="reviewModal{{ $order->id }}" tabindex="-1" aria-labelledby="reviewModalLabel{{ $order->id }}" aria-hidden="true">
+                           <div class="modal-dialog">
+                              <div class="modal-content">
+                                 <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
+                                 @csrf
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="reviewModalLabel{{ $order->id }}">Ulasan untuk {{ $order->service->overview }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="mb-2">
+                                       <label for="rating">Rating</label>
+                                       <div class="star-rating">
+                                       @for ($i = 5; $i >= 1; $i--)
+                                          <input type="radio" id="star{{ $i }}_{{ $order->id }}" name="rating" value="{{ $i }}" required {{ $order->rating == $i ? 'checked' : '' }} />
+                                          <label for="star{{ $i }}_{{ $order->id }}" title="{{ $i }} stars">&#9733;</label>
+                                       @endfor
+                                       </div>
+                                    </div>
+                                    <div class="mb-2">
+                                       <textarea name="review" rows="3" class="form-control" placeholder="Tulis ulasan..." required>{{ $order->review }}</textarea>
+                                    </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <div class="d-flex justify-content-end gap-2 w-100">
+                                       <button type="submit" class="btn btn-success">Kirim Ulasan</button>
+                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    </div>
+                                 </div>
+                                 </form>
 
+                                 
 
+                              </div>
+                           </div>
+                           </div>
                      @endif
                      </div>
                   </div>
@@ -263,8 +326,7 @@
       <div class="modal fade" id="orderUpdateModal" tabindex="-1" aria-labelledby="orderCompleteLabel" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4">
-        <h4 class="modal-title text-success mb-3" id="orderCompleteLabel">🎉 Order Complete</h4>
-        <p>Order Updated!</p>
+        <h4 class="modal-title text-success" id="orderCompleteLabel">🎉 Pesanan Diedit</h4>
         </div>
          </div>
     </div>
@@ -304,6 +366,7 @@
     </script>
     @endif
       <!-- <a href="" class="btn btn-outline-success">View</a> -->
+   </div>
    </main>
 </section>
 @endsection

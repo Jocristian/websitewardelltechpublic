@@ -40,65 +40,7 @@
       </header>
 
    <!--=============== SIDEBAR ===============-->
-   <nav class="sidebar" id="sidebar">
-      <div class="sidebar__container">
-        <a href="{{ route('home') }}">
-         <div class="sidebar__user">
-                <img alt="logo-heading" src="/img/logoheading.png" style="height: 50px">
-                <div class="sidebar__info h5 my-2">
-                    <h5 class="text-center my-2"><p style="font-size: 50px, font-family: Rubik">Wardell Tech</p></h5>
-                </div>
-         </div>
-        </a>
-         
-
-         <div class="sidebar__content">
-            <div>
-               <h3 class="sidebar__title">MANAGE</h3>
-
-               <div class="sidebar__list">
-
-                <a href="{{ route('dashboard') }}" class="sidebar__link">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Dashboard</span>
-                  </a>
-
-
-                  <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Edit Profile</span>
-                  </a>
-
-                  <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>Recent Transactions</span>
-                  </a>
-
-                  @if (auth() -> user() -> role == 'freelancer' )
-                  <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>My Services</span>
-                  </a>
-                  <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>My Messages</span>
-                  </a>
-                  @endif
-
-               </div>
-            </div>
-            <div class="sidebar__actions">
-         <div class="sidebar__actions">
-            <form action="{{ route('logout') }}" method="POST">
-               @csrf
-               <button class="sidebar__link">
-                  <i class="ri-logout-box-r-fill"></i>
-                  <span>Log Out</span>
-               </button>
-            </form>
-         </div>
-      </div>
-   </nav>
+@include('layouts.partials.sidenav')
 
    <!--=============== MAIN ===============-->
 <main class="main" id="main"> 
@@ -106,27 +48,42 @@
             <h2 class="mb-4">Dashboard</h2>
 
             <div class="row mb-4">
-                <div class="col-md-4"><div class="card p-3 text-center"><strong>My Services</strong><h4>{{ $servicesCount }}</h4></div></div>
-                <!-- <div class="col-md-3"><div class="card p-3 text-center"><strong>Orders (as Buyer)</strong><h4>{{ $ordersAsBuyer }}</h4></div></div> -->
-                <div class="col-md-4"><div class="card p-3 text-center"><strong>Orders</strong><h4>{{ $ordersAsSeller }}</h4></div></div>
-                <div class="col-md-4"><div class="card p-3 text-center"><strong>Total Earnings</strong><h4>Rp.{{ $earnings }}</h4></div></div>
+                <div class="col-md-4">
+                    <div class="card p-3 text-center">
+                        <strong>Jasa Saya</strong>
+                        <h4>{{ $servicesCount }}</h4>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3"><div class="card p-3 text-center"><strong>Pesanan (sebagai Pembeli)</strong><h4>{{ $ordersAsBuyer }}</h4></div></div> -->
+                <div class="col-md-4">
+                    <div class="card p-3 text-center">
+                        <strong>Pesanan Masuk</strong>
+                        <h4>{{ $ordersAsSeller }}</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 text-center">
+                        <strong>Total Penghasilan</strong>
+                        <h4>Rp.{{ $earnings }}</h4>
+                    </div>
+                </div>
             </div>
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="card p-4">
-                        <h5 class="mb-3">Order Status Overview</h5>
+                        <h5 class="mb-3">Ringkasan Status Pesanan</h5>
                         <canvas id="statusChart"></canvas>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card p-4">
-                        <h5 class="mb-3">Top Services by Orders</h5>
+                        <h5 class="mb-3">Jasa Teratas Berdasarkan Pesanan</h5>
                         <canvas id="topServicesChart"></canvas>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card p-4">
-                        <h5 class="mb-3">Earnings Over Time</h5>
+                        <h5 class="mb-3">Penghasilan dari Waktu ke Waktu</h5>
                         <canvas id="earningsChart"></canvas>
                     </div>
                 </div>

@@ -107,6 +107,21 @@ class ServiceController extends Controller
             return redirect()->back()->with('success', 'Service updated successfully!');
         }
 
+        public function index()
+        {
+            $user = auth()->user();
+
+            $orders = Order::with('service')
+                ->when($user->role === 'freelancer', fn($q) => $q->where('freelancer_id', $user->id))
+                ->when($user->role === 'customer', fn($q) => $q->where('customer_id', $user->id))
+                ->when(request('filter_status'), fn($q, $status) => $q->where('status', $status))
+                ->orderByDesc('created_at')
+                ->get();
+
+            return view('order.index', compact('orders'));
+        }
+
+
 
 
 

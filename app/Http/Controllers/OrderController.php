@@ -105,32 +105,51 @@ class OrderController extends Controller
     return view('order.quickCreate', compact('service'));
 }
 
-public function mytransactions()
+public function mytransactions(Request $request)
 {
     $user = Auth::user();
 
+    $query = Order::with(['service', 'service.user']);
+
     if ($user->role === 'freelancer') {
-        // Seller's orders
-        $order = Order::with(['service', 'service.user'])
-                    ->where('seller_id', $user->id)
-                    ->get();
-
-        return view('sections.mytransactions', compact('order'));
+        $query->where('seller_id', $user->id);
+    } elseif ($user->role === 'customer') {
+        $query->where('buyer_id', $user->id);
+    } else {
+        abort(403, 'Unauthorized');
     }
 
-    if ($user->role === 'customer') {
-        // Buyer's orders
-        $order = Order::with(['service', 'service.user'])
-                    ->where('buyer_id', $user->id)
-                    ->get();
-
-        return view('sections.mytransactions', compact('order'));
+    // Filter tambahan
+    if ($request->filled('date')) {
+        $query->whereDate('created_at', $request->date);
     }
 
-    abort(403, 'Unauthorized');
+    if ($request->filled('min_price')) {
+        $query->whereHas('service', function ($q) use ($request) {
+            $q->where('price', '>=', $request->min_price);
+        });
+    }
+
+    if ($request->filled('max_price')) {
+        $query->whereHas('service', function ($q) use ($request) {
+            $q->where('price', '<=', $request->max_price);
+        });
+    }
+
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    if ($request->filled('overview')) {
+        $query->whereHas('service', function ($q) use ($request) {
+            $q->where('overview', 'like', '%' . $request->overview . '%');
+        });
+    }
+
+    $order = $query->latest()->get();
+
+    return view('sections.mytransactions', compact('order'));
 }
-    
-
 
     public function updateStatus(Request $request, $id)
 {
@@ -197,6 +216,7 @@ public function deleteReview($id)
 
     return redirect()->back()->with('success', 'Review deleted successfully.');
 }
+
 
 
     

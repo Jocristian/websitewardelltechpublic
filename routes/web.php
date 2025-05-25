@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\PortfolioController;
 use App\Models\User;
 
 use App\Http\Middleware\AdminMiddleware;
@@ -15,6 +16,9 @@ use App\Http\Middleware\CheckBanned;
 
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     $freelancers = User::where('role', 'freelancer')->get();
@@ -49,7 +53,11 @@ Route::get('/myservices', function () {
     return view('sections/myservices');
 })->name('myservices');
 
-Route::middleware(['auth'])->group(function () {
+Route::get('/myportfolios', function () {
+    return view('sections/myportfolios');
+})->name('myportfolios');
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mytransactions', function () {
         return view('sections/mytransactions');
     })->name('mytransactions');
@@ -106,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Show general order details
     Route::get('/services/{service_id}/orderdetail', [OrderController::class, 'show'])->name('order.show');
 
@@ -152,6 +160,11 @@ Route::get('/my-profile/{id}', [ProfileController::class, 'show'])->name('my-pro
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+Route::post('/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store');
+Route::put('/portfolios/{id}', [PortfolioController::class, 'update'])->name('portfolios.update');
+Route::delete('/portfolios/{id}', [PortfolioController::class, 'destroy'])->name('portfolios.destroy');
+Route::get('/myportfolios', [PortfolioController::class, 'showMyPortfolios'])->middleware('auth');
+Route::get('/portfolio/{id}', [PortfolioController::class, 'show'])->name('portfolio.show');
 
 
 Route::post('/postservice', [PostServicesController::class, 'store'])->name('postservice');
@@ -164,6 +177,11 @@ Route::get('/my-profile/freelancers', [UserController::class, 'listFreelancers']
 
 Route::get('/users', [App\Http\Controllers\AdminController::class, 'index'])->name('sections.users')->middleware(['admin','auth']);
 Route::post('/users/{id}/ban', [App\Http\Controllers\AdminController::class, 'ban'])->name('sections.users.ban')->middleware('admin','auth');
+
+Route::get('/verify/code', [RegisterController::class, 'showCodeForm'])->name('verify.code.form');
+Route::post('/verify/code', [RegisterController::class, 'verifyCode'])->name('verify.code.submit');
+Route::post('/send-verification-code', [RegisterController::class, 'sendVerificationCode'])->name('send.code');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 
 // Route::get('/profile', function () {

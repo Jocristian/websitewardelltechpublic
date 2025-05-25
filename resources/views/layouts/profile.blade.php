@@ -12,6 +12,8 @@
 </head>
 <body>
 @yield('css')
+
+
 @yield('profile')
 @yield('myservices')
 @yield('mytransactions')
@@ -19,5 +21,7 @@
 @yield('dashboard')
 @yield('adminuser')
 @yield('admindashboard')
+@yield('adminfreelancers')
+@yield('myportfolios')
 <script src="{{ asset('assets/js/main.js') }}"></script>
 </body>

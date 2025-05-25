@@ -31,24 +31,24 @@
         <div class="bg-white shadow rounded p-4">
             <div class="flex items-center gap-4">
                 @if($user->profile_photo)
-                    <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Profile Photo" class="w-24 h-24 rounded-full object-cover">
+                    <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Profile Photo" class="w-24 h-24 rounded-full object-cover mx-5">
                 @else
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}" alt="Avatar" class="w-24 h-24 rounded-full">
                 @endif
 
-                <div>
+                <div class="mx-5">
                     <h2 class="text-2xl font-bold">{{ $user->name }}</h2>
                     <p class="text-muted">{{ $user->email }}</p>
                     <p class="text-muted">📱 {{ $user->phone_number }}</p>
                     @if(isset($user->about_me))
-                        <p class="mt-2">{{ $user->about_me }}</p>
+                        <p class="mt-2">{!! nl2br(e($user->about_me)) !!}</p>
                     @endif
                 </div>
             </div>
         </div>
 
         <div class="mt-5">
-            <h3 class="text-xl font-semibold mb-3">Services Offered</h3>
+            <h3 class="text-xl font-semibold mb-5">Layanan</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @forelse($services as $service)
                 <a href="{{ url('services/' . $service->service_id) }}">
@@ -67,7 +67,25 @@
                     </div>
                 </a>
                 @empty
-                    <p>This user has no services yet.</p>
+                    <p>Freelancer ini belum memiliki layanan.</p>
+                @endforelse
+            </div>
+        </div>
+        <div class="mt-5">
+            <h3 class="text-xl font-semibold mb-5">Portfolio Freelancer</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @forelse($portfolios as $portfolio)
+                <a href="{{ url('services/' . $service->service_id) }}">
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title. ' ' . $portfolio->id }}" class="w-full max-h-40 object-cover rounded-lg">
+                        <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($portfolio->title, 35) }}</h2>
+                        <div class="flex justify-between items-center mt-2">
+                            <h2 class="text-gray-700">{{ \Illuminate\Support\Str::limit($portfolio->description, 35) }}</h2>
+                        </div>
+                    </div>
+                </a>
+                @empty
+                    <p>Freelancer ini belum memiliki portfolio.</p>
                 @endforelse
             </div>
         </div>
