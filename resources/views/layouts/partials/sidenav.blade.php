@@ -12,57 +12,61 @@
         </a>
 
          <div class="sidebar__content">
-            <div>
-               <h3 class="sidebar__title">MANAGE</h3>
+      <div>
+        <h3 class="sidebar__title">MANAJEMEN</h3>
 
-               <div class="sidebar__list">
+        <div class="sidebar__list">
 
-               <a href="{{ route('dashboard') }}" class="sidebar__link {{ request()->is('dashboard') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Dashboard</span>
-                  </a>
+          <!-- Dashboard -->
+          <a href="{{ route('dashboard') }}" class="sidebar__link {{ request()->is('dashboard') ? 'active-link' : '' }}">
+            <i class="ri-dashboard-line"></i>
+            <span>Dasbor</span>
+          </a>
 
+          <!-- Edit Profile -->
+          <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
+            <i class="ri-user-settings-line"></i>
+            <span>Edit Profil</span>
+          </a>
 
-                  <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
-                     <i class="ri-pie-chart-2-fill"></i>
-                     <span>Edit Profile</span>
-                  </a>
+          <!-- Recent Transactions -->
+          <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
+            <i class="ri-time-line"></i>
+            <span>Transaksi Terbaru</span>
+          </a>
 
-                  <a href="{{ route('mytransactions') }}" class="sidebar__link {{ request()->is('mytransactions') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>Recent Transactions</span>
-                  </a>
+          @if (auth()->user()->role == 'freelancer')
+          <!-- My Services -->
+          <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
+            <i class="ri-briefcase-line"></i>
+            <span>Jasa Saya</span>
+          </a>
 
-                  @if (auth() -> user() -> role == 'freelancer' )
-                  <a href="{{ route('myservices') }}" class="sidebar__link {{ request()->is('myservices') ? 'active-link' : '' }}">
-                     <i class="ri-arrow-up-down-line"></i>
-                     <span>My Services</span>
-                  </a>
+          <!-- My Portfolios -->
+          <a href="/myportfolios" class="sidebar__link {{ request()->is('myportfolios') ? 'active-link' : '' }}">
+            <i class="ri-gallery-line"></i>
+            <span>Portofolio Saya</span>
+          </a>
 
-                  <a href="/myportfolios" class="sidebar__link {{ request()->is('myportfolios') ? 'active-link' : '' }}">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>My Portfolios</span>
-                  </a>
-                  
-                  <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
-                        <i class="ri-mail-unread-fill"></i>
-                        <span>My Messages</span>
-                  </a>
+          <!-- My Messages -->
+          <a href="{{ route('mymessages') }}" class="sidebar__link {{ request()->is('mymessages') ? 'active-link' : '' }}">
+            <i class="ri-chat-1-line"></i>
+            <span>Pesan Saya</span>
+          </a>
+          @endif
 
-                  
-                  @endif
-
-               </div>
-            </div>
-            <div class="sidebar__actions">
-         <div class="sidebar__actions">
-            <form action="{{ route('logout') }}" method="POST">
-               @csrf
-               <button class="sidebar__link">
-                  <i class="ri-logout-box-r-fill"></i>
-                  <span>Log Out</span>
-               </button>
-            </form>
-         </div>
+        </div>
       </div>
-   </nav>
+
+      <div class="sidebar__actions">
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button class="sidebar__link">
+            <i class="ri-logout-box-line"></i>
+            <span>Keluar</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>

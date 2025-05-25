@@ -82,6 +82,7 @@
                         <div class="flex justify-between items-center mt-2">
                             <h2 class="text-gray-700">{{ \Illuminate\Support\Str::limit($portfolio->description, 35) }}</h2>
                         </div>
+                        <span class="badge bg-secondary mt-2">{{$portfolio->category}}</span>
                     </div>
                 </a>
                 @empty

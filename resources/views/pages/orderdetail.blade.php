@@ -38,10 +38,6 @@
 <div class="container my-5">
     <!-- Alert success -->
     <!-- Alert sukses -->
-<div class="alert alert-success">
-    ✅ Terima kasih atas pembelian Anda! Bukti pembayaran telah dikirim ke email Anda.
-</div>
-
 <!-- Persyaratan Pesanan -->
 <div class="card mb-4">
     <div class="card-header">
@@ -67,9 +63,7 @@
                     Informasi yang saya berikan <strong>akurat dan lengkap</strong>.
                 </label>
             </div>
-
-            <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-outline-secondary">Ingatkan Saya Nanti</a>
+            <div class="d-flex justify-content-end">
                 <button type="button" id="pay-button" class="btn btn-success">Mulai Pesanan & Bayar</button>
             </div>
             <input type="hidden" name="service_id" value="{{ $order->service_id }}">

@@ -79,6 +79,7 @@ class PortfolioController extends Controller
         $portfolio->title = $request->title;
         $portfolio->description = $request->description;
         $portfolio->link = $request->link;
+        $portfolio->category = $request->category;
         $portfolio->save();
 
         return redirect()->back()->with('success', 'Portfolio berhasil diperbarui!');
