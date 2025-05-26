@@ -58,9 +58,9 @@ Route::get('/myportfolios', function () {
 })->name('myportfolios');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/mytransactions', function () {
-        return view('sections/mytransactions');
-    })->name('mytransactions');
+    // Route::get('/mytransactions', function () {
+    //     return view('sections/mytransactions');
+    // })->name('mytransactions');
 
     Route::get('/servicesdetail', function () {
         return view('pages/servicesdetail');

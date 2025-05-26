@@ -182,7 +182,7 @@
                         <form method="POST" action="{{ route('order.updateStatus', $order->id) }}">
                            @csrf
                            @method('PUT')
-                           <div class="mb-2">
+                           <div class="mb-2 mx-2">
                               <select name="status" class="form-select form-select-sm">
                                     <option value="on progress" {{ $order->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
                                     <option value="finished" {{ $order->status == 'finished' ? 'selected' : '' }}>Finished</option>
