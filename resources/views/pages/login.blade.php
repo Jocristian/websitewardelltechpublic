@@ -28,9 +28,9 @@
                         @error('password')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <button type="submit" class="button btn"><span><span>Kirim Sekarang</span></span></button>
+                        <button type="submit" class="button btn"><span><span>Masuk</span></span></button>
                         
-                        <div class="text-center pt-3"><a class="text-center" href="register">Belum punya akun?</a></div>
+                        <div class="text-center pt-3"><a class="text-center text-primary" href="register">Belum punya akun? Daftar</a></div>
                         <div class="text-center primary pt-3">
                             <strong>
                                 <a class="text-center" href="/">

@@ -155,6 +155,11 @@ public function mytransactions(Request $request)
 {
     $order = Order::findOrFail($id);
 
+    $order->status = $request->input('status');
+    $order->save();
+
+    return redirect()->route('mytransactions')->with('success', 'Status updated successfully.');
+
     // Pastikan hanya pemilik order yang bisa update
 
     if ($request->has('delete_review')) {

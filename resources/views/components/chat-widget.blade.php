@@ -64,7 +64,7 @@ s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.h
             const other = new Talk.User(seller);
 
             const session = new Talk.Session({
-                appId: "tvblcOqF",
+                appId: "tlXluJAX",
                 me: me,
             });
 

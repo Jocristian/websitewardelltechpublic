@@ -164,9 +164,9 @@
                         </a>
                         <div>
                            <h5 class="mb-1">{{ $order->service->overview }}</h5>
-                           <p class="mb-1 text-muted">Price: <strong>${{ $order->service->price }}</strong></p>
-                           <p class="mb-1 text-muted">Due in: <strong>{{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}</strong></p>
-                           <p class="mb-0">Status: 
+                           <p class="mb-1 text-muted">Harga : <strong>${{ $order->service->price }}</strong></p>
+                           <p class="mb-1 text-muted">Tengah Pengerjaan : <strong>{{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}</strong></p>
+                           <p class="mb-0">Status : 
                               <span class="badge 
                                     @if($order->status == 'on progress') bg-warning text-dark 
                                     @elseif($order->status == 'finished') bg-success 
@@ -182,14 +182,14 @@
                         <form method="POST" action="{{ route('order.updateStatus', $order->id) }}">
                            @csrf
                            @method('PUT')
-                           <div class="mb-2">
+                           <div class="mb-2 mx-2">
                               <select name="status" class="form-select form-select-sm">
                                     <option value="on progress" {{ $order->status == 'on progress' ? 'selected' : '' }}>On Progress</option>
                                     <option value="finished" {{ $order->status == 'finished' ? 'selected' : '' }}>Finished</option>
                               </select>
                               <button type="submit" class="btn btn-sm btn-primary w-100 mb-2 mt-2 mr-2">Update</button>
                               <button type="button" class="btn btn-sm btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#orderDetailsModal-{{ $order->id }}">
-                                 View Details
+                                 Lihat Detail
                               </button>
                            </div>         
                         </form>
@@ -206,12 +206,12 @@
                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                           <p><strong>Order ID:</strong> {{ $order->id }}</p>
-                           <p><strong>Service:</strong> {{ $order->service->overview }}</p>
-                           <p><strong>Requirements:</strong> {{ $order->details }}</p>
-                           <p><strong>Price:</strong> ${{ $order->service->price }}</p>
-                           <p><strong>Deadline:</strong> {{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d H:i:s') }}</p>
-                           <p><strong>Status:</strong> 
+                           <p><strong>Order ID :</strong> {{ $order->id }}</p>
+                           <p><strong>Jasa :</strong> {{ $order->service->overview }}</p>
+                           <p><strong>Kebutuhan :</strong> {{ $order->details }}</p>
+                           <p><strong>Harga :</strong> Rp{{ $order->service->price }}</p>
+                           <p><strong>Tenggat Waktu :</strong> {{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d H:i:s') }}</p>
+                           <p><strong>Status :</strong> 
                               <span class="badge 
                                     @if($order->status == 'on progress') bg-warning text-dark 
                                     @elseif($order->status == 'finished') bg-success 
@@ -222,8 +222,8 @@
                            </p>
 
                            @if ($order->status === 'finished' && $order->review)
-                              <p><strong>Your Rating:</strong> {{ $order->rating }} / 5</p>
-                              <p><strong>Review:</strong> {{ $order->review }}</p>
+                              <p><strong>Penilaian :</strong> {{ $order->rating }} / 5</p>
+                              <p><strong>Ulasan :</strong> {{ $order->review }}</p>
                            @endif
                         </div>
                         <div class="modal-footer">
@@ -247,10 +247,10 @@
                         <div> <div class="mb-2">
                               <h5 class>{{ $order->service->overview }}</h5>
                               </div>
-                              <p class="mb-1">Price: <strong>${{ $order->service->price }}</strong></p>
+                              <p class="mb-1">Price: <strong>Rp{{ $order->service->price }}</strong></p>
                               <p class="mb-1">Due In:
                                  <strong>
-                                    {{ \Carbon\Carbon::now()->diffForHumans($order->deadline, ['parts' => 2, 'short' => true, 'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) }}
+                                    {{ \Carbon\Carbon::parse($order->deadline)->diffForHumans() }}
                                  </strong>
                               </p>
                               <p>Status: 
@@ -291,7 +291,7 @@
                                  </div>
                                  <div class="modal-body">
                                     <div class="mb-2">
-                                       <label for="rating">Rating</label>
+                                       <label for="rating">Penilaian </label>
                                        <div class="star-rating">
                                        @for ($i = 5; $i >= 1; $i--)
                                           <input type="radio" id="star{{ $i }}_{{ $order->id }}" name="rating" value="{{ $i }}" required {{ $order->rating == $i ? 'checked' : '' }} />
@@ -332,24 +332,29 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const modalElement = document.getElementById('orderUpdateModal');
+       document.addEventListener('DOMContentLoaded', function () {
+         const logoutForm = document.getElementById('logout-form');
+         const modalElement = document.getElementById('orderUpdateModal');
 
-            if (!form || !modalElement) return;
+         if (!logoutForm || !modalElement) return;
 
-            const modal = new bootstrap.Modal(modalElement);
+         const modal = new bootstrap.Modal(modalElement);
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevent default submit
-                modal.show(); // Show modal
+         document.querySelectorAll('form').forEach(function (form) {
+            if (form !== logoutForm) {
+               form.addEventListener('submit', function (e) {
+               e.preventDefault();
+               modal.show();
+               // ...
+               });
 
-                // After showing modal, submit form for real
-                setTimeout(() => {
-                    form.submit();
-                }, 1500);
-            });
-        });
+               // After showing modal, submit form for real
+               setTimeout(() => {
+               form.submit();
+               }, 1500);
+            }
+         });
+         });
     </script>
     @if(session('success'))
     <script>

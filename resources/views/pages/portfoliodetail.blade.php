@@ -7,15 +7,7 @@
     <link rel="icon" href="/img/headingW.png">
     <link rel="stylesheet" href="assets/css/services.css">
     @yield('css')
-    @vite([
-    'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
-    'node_modules/jquery.fancybox/source/jquery.fancybox.css',
-    'resources/fonts/flaticon_mycollection.css',
-    'resources/css/fontawesome.min.css',
-    'resources/css/style.css',
-    'resources/css/responsive.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,8 +38,9 @@
             </div>
 
             <!-- Title and Description -->
-            <h1>{{ $portfolio->title }}</h1>
-            <p>{!! nl2br(e($portfolio->description)) !!}</p>
+            <h1 class="font-semibold mb-2">{{ $portfolio->title }}</h1>
+            <p class="mb-4">{!! nl2br(e($portfolio->description)) !!}</p>
+            <h4 class="mt-3 mb-5"> Link : <a href="{{ $portfolio->link }}">{{ $portfolio->link }}</a></h3>
         </div>
 
         <!-- Right: Sidebar -->

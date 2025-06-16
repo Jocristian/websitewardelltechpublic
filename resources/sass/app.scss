@@ -1,8 +1,32 @@
-// Fonts
+// app.scss
+
+// Fonts dari CDN
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
-// Variables
+// Import variabel kustom (buat file _variables.scss di folder yang sama atau sesuaikan path)
 @import 'variables';
 
-// Bootstrap
+// Import Bootstrap SCSS (pastikan sudah install bootstrap via npm)
 @import 'bootstrap/scss/bootstrap';
+
+// Import custom style kamu setelah bootstrap, supaya bisa override
+// @import 'style';
+// Import font dari CDN
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+
+// Import Owl Carousel CSS dari node_modules
+@import "../../node_modules/owl.carousel/dist/assets/owl.carousel.min.css";
+
+@import "owl.carousel/dist/assets/owl.theme.default.min.css";
+
+// Import Fancybox CSS dari node_modules
+@import "../../node_modules/jquery.fancybox/source/jquery.fancybox.css";
+
+// Import CSS lokal dari resources (sesuaikan path)
+@import "../fonts/flaticon_mycollection.css";
+@import "../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css";
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+@import "../css/style.css";
+@import "../css/responsive.css";
+

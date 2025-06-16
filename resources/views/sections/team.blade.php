@@ -1,13 +1,13 @@
 <section id="team" class="gap team-section">
     <div class="container">
-        <div class="heading sec-title-animation animation-style2">
-            <span class="title-animation">Situs web yang membawa lead</span>
-            <h2 class="title-animation">Temui orang-orang hebat kami</h2>
-            <p>Tingkatkan efisiensi Anda, dan buat pengalaman yang lebih baik bagi semua pihak yang terlibat. Otomatiskan alur kerja Anda dengan alat yang Anda gunakan setiap hari.</p>
+        <div class="heading sec-title-animation animation-style2" style="z-index: 2">
+            <span class="title-animation" style="z-index: 2">Situs web yang membawa lead</span>
+            <h2 class="title-animation" style="z-index: 2">Temui orang-orang hebat kami</h2>
+            <p style="z-index: 2">Tingkatkan efisiensi Anda, dan buat pengalaman yang lebih baik bagi semua pihak yang terlibat. Otomatiskan alur kerja Anda dengan alat yang Anda gunakan setiap hari.</p>
         </div>
         
         <div class="row">
-            @forelse ($freelancers->take(3) as $freelancer)
+            @forelse ($freelancers->whereNotNull('email_verified_at')->take(3) as $freelancer)
                 <div class="col-lg-4 col-md-6">
                     <div class="team">
                         <div class="expert-icon">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <ul class="shaps-img">
-        <li><img src="/img/shaps-3.png" alt="img"></li>
-        <li><img src="/img/shaps-5.png" alt="img"></li>
+        <li><img src="/img/shaps-3.png" alt="img" style="z-index: 1"></li>
+        <li><img src="/img/shaps-5.png" alt="img" style="z-index: 1"></li>
     </ul>
 </section>

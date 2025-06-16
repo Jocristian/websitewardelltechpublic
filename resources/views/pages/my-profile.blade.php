@@ -8,15 +8,7 @@
     <link rel="icon" href="/img/headingW.png">
     <link rel="stylesheet" href="assets/css/services.css">
     @yield('css')
-    @vite([
-    'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
-    'node_modules/jquery.fancybox/source/jquery.fancybox.css',
-    'resources/fonts/flaticon_mycollection.css',
-    'resources/css/fontawesome.min.css',
-    'resources/css/style.css',
-    'resources/css/responsive.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -54,7 +46,7 @@
                 <a href="{{ url('services/' . $service->service_id) }}">
                     <div class="bg-white shadow-md rounded-lg p-4">
                         <img src="{{ asset('storage/' . $service->photo) }}" alt="{{ $service->overview . ' ' . $service->service_id }}" class="w-full max-h-40 object-cover rounded-lg">
-                        <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 35) }}</h2>
+                        <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 25) }}</h2>
                         <div class="flex justify-between items-center mt-2">
                         <span class="text-yellow-500">
                             ⭐ {{ number_format($service->ordersWithReview->avg('rating'), 1) }} ({{ $service->ordersWithReview->count() }} reviews)
@@ -75,12 +67,12 @@
             <h3 class="text-xl font-semibold mb-5">Portfolio Freelancer</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @forelse($portfolios as $portfolio)
-                <a href="{{ url('services/' . $service->service_id) }}">
+                <a href="{{ url('portfolio/' . $portfolio->id) }}">
                     <div class="bg-white shadow-md rounded-lg p-4">
                         <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title. ' ' . $portfolio->id }}" class="w-full max-h-40 object-cover rounded-lg">
-                        <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($portfolio->title, 35) }}</h2>
+                        <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($portfolio->title, 25) }}</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <h2 class="text-gray-700">{{ \Illuminate\Support\Str::limit($portfolio->description, 35) }}</h2>
+                            <h2 class="text-gray-700">{{ \Illuminate\Support\Str::limit($portfolio->description, 25) }}</h2>
                         </div>
                         <span class="badge bg-secondary mt-2">{{$portfolio->category}}</span>
                     </div>

@@ -8,20 +8,11 @@
     <link rel="icon" href="/img/headingW.png">
     <link rel="stylesheet" href="assets/css/services.css">
     @yield('css')
-    @vite([
-    'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
-    'node_modules/jquery.fancybox/source/jquery.fancybox.css',
-    'resources/fonts/flaticon_mycollection.css',
-    'resources/css/fontawesome.min.css',
-    'resources/css/style.css',
-    'resources/css/responsive.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 </head>
-
 
 @include('layouts.partials.navbar')
 <body class="bg-gray-100">
@@ -38,28 +29,28 @@
     $servicessorttedbyrating = $services->sortByDesc('average_rating');
     @endphp
     @foreach($servicessorttedbyrating->take(3) as $service)
-    <a href="{{ url('services/' . $service->service_id) }}">
-        <div class="bg-white shadow-md rounded-lg p-4">
-            <img src="{{ asset('storage/' . $service->photo) }}" alt="{{ $service->overview . ' ' . $service->service_id }}" class="w-full max-h-40 object-cover rounded-lg">
-            <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 35) }}</h2>
-            <div class="flex justify-between items-center mt-2">
-                <span class="text-yellow-500">
-                    ⭐ {{ number_format($service->average_rating, 1) }} ({{ $service->rating_count }} reviews)
-                </span>
+        <a href="{{ url('services/' . $service->service_id) }}">
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <img src="{{ asset('storage/' . $service->photo) }}" alt="{{ $service->overview . ' ' . $service->service_id }}" class="w-full max-h-40 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 25) }}</h2>
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-yellow-500">
+                        ⭐ {{ number_format($service->average_rating, 1) }} ({{ $service->rating_count }} reviews)
+                    </span>
 
-                <h2 class="text-gray-700">Rp.{{ number_format($service->price) }}</h2>
-                
+                    <h2 class="text-gray-700">Rp.{{ number_format($service->price) }}</h2>
+                    
+                </div>
+                <span class="badge bg-secondary mt-2">{{$service->category}}</span>
             </div>
-            <span class="badge bg-secondary mt-2">{{$service->category}}</span>
-        </div>
-    </a>
-@endforeach
+        </a>
+    @endforeach
   </div>
 
 
   <!-- Our Services (Filter Section) -->
 <div class="flex justify-between items-center mt-12 mb-6 relative">
-  <h1 class="text-3xl font-semibold">jasa Kami</h1>
+  <h1 class="text-3xl font-semibold">Jasa Kami</h1>
   
   <!-- Icon Filter -->
   <!-- <button id="filterToggle" class="p-2 rounded-lg hover:bg-gray-100 transition">
@@ -169,7 +160,7 @@
         <a href="{{ url('services/' . $service->service_id) }}">
             <div class="bg-white shadow-md rounded-lg p-4">
                 <img src="{{ asset('storage/' . $service->photo) }}" alt="{{ $service->overview . ' ' . $service->service_id }}" class="w-full max-h-40 object-cover rounded-lg">
-                <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 35) }}</h2>
+                <h2 class="text-xl font-bold mt-2">{{ \Illuminate\Support\Str::limit($service->overview, 25) }}</h2>
                 <div class="flex justify-between items-center mt-2">
                     <span class="text-yellow-500">
                         ⭐ {{ number_format($service->average_rating, 1) }} ({{ $service->rating_count }} reviews)

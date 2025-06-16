@@ -16,12 +16,13 @@
         <h3 class="sidebar__title">MANAJEMEN</h3>
 
         <div class="sidebar__list">
-
+          @if (auth()->user()->role == 'freelancer')
           <!-- Dashboard -->
           <a href="{{ route('dashboard') }}" class="sidebar__link {{ request()->is('dashboard') ? 'active-link' : '' }}">
             <i class="ri-dashboard-line"></i>
-            <span>Dasbor</span>
+            <span>Dashboard</span>
           </a>
+          @endif
 
           <!-- Edit Profile -->
           <a href="{{ route('profile') }}" class="sidebar__link {{ request()->is('profile') ? 'active-link' : '' }}">
@@ -59,11 +60,11 @@
       </div>
 
       <div class="sidebar__actions">
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST" name="logout-form">
           @csrf
-          <button class="sidebar__link">
-            <i class="ri-logout-box-line"></i>
-            <span>Keluar</span>
+          <button class="sidebar__link" name="logout-button">
+            <i class="ri-logout-box-line text-danger"></i>
+            <span class="text-danger">Keluar Dari Akun</span>
           </button>
         </form>
       </div>

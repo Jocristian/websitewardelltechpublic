@@ -50,10 +50,10 @@ class AdminDashboardController extends Controller
         );
 
         // 6. orders per status (excluding pending)
-        $orderStats = Order::selectRaw('status, COUNT(*) as count')
-            ->where('status', '!=', 'pending')
-            ->groupBy('status')
-            ->pluck('count', 'status');
+        $orderStats = Order::whereIn('status', ['on progress', 'finished'])
+            ->with('service')
+            ->get();
+
 
         return view('sections.admindashboard', compact(
             'servicesCount',

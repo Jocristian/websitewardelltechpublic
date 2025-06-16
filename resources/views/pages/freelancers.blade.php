@@ -8,15 +8,8 @@
     <link rel="icon" href="/img/headingW.png">
     <link rel="stylesheet" href="assets/css/services.css">
     @yield('css')
-    @vite([
-    'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.carousel.min.css',
-    'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css',
-    'node_modules/jquery.fancybox/source/jquery.fancybox.css',
-    'resources/fonts/flaticon_mycollection.css',
-    'resources/css/fontawesome.min.css',
-    'resources/css/style.css',
-    'resources/css/responsive.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -33,7 +26,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         @forelse ($freelancers as $freelancer)
             <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center">
-                <img src="{{ $freelancer->profile_photo ? asset('storage/' . $freelancer->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}" class="w-24 h-24 object-cover rounded-full mb-2" alt="Profile">
+                <img src="{{ $freelancer->profile_photo ? asset('storage/' . $freelancer->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode($freelancer->name) . '&background=0D8ABC&color=fff' }}" class="w-24 h-24 object-cover rounded-full mb-2" alt="Profile">
                 <h3 class="text-lg font-semibold">{{ $freelancer->name }}</h3>
                 <p class="text-gray-600">{{ $freelancer->email }}</p>
                 <span class="badge bg-success mt-2">Freelancer</span>

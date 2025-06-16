@@ -1,9 +1,6 @@
 <footer class="gap no-bottom" style="background-color: #1a1a1a;"> <!-- Ganti #1a1a1a dengan warna yang sesuai -->
             <div class="container">
                 <div class="footer-try">
-            <div>
-                <h2>Mulai Bisnis Anda dan Capai Tujuan</h2>
-            </div>
         </div>
         <div class="row">
             <div class="col-lg-8 col-md-8">

@@ -117,7 +117,7 @@ s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.h
             const me = new Talk.User(user);
 
             const session = new Talk.Session({
-                appId: "tvblcOqF",
+                appId: "tlXluJAX",
                 me: me,
             });
 

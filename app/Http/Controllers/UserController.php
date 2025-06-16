@@ -7,15 +7,21 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller {
     public function listFreelancers()
-        {
-            $freelancers = User::where('role', 'freelancer')->get();
-            return view('pages.freelancers', compact('freelancers'));
-        }
+    {
+        $freelancers = User::where('role', 'freelancer')
+                            ->whereNotNull('email_verified_at') // only verified users
+                            ->get();
+
+        return view('pages.freelancers', compact('freelancers'));
+    }
 
     // In UserController.php
     public function listFreelancersIndex()
         {
-            $freelancers = User::where('role', 'freelancer')->get();
+            $freelancers = User::where('role', 'freelancer')
+                            ->whereNotNull('email_verified_at') // only verified users
+                            ->get();
+
             return view('pages.home', compact('freelancers'));
         }
 
